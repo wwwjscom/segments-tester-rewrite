@@ -27,4 +27,10 @@ describe SQL do
     results = @db.query ''
   end
 
+	it 'should populate @queries' do
+		@db.populate(Config.read_yml)
+		@db.queries.class.should == Array
+		@db.queries[0].class.should == Hash
+	end
+
 end

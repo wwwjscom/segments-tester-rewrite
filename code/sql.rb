@@ -2,7 +2,7 @@ require 'mysql'
 
 class SQL
 	
-	attr_reader :user, :pass, :database
+	attr_reader :user, :pass, :database, :queries
 	
 	def initialize(user, pass, db, testing = false)
 		@user		= user
@@ -11,6 +11,15 @@ class SQL
 		@testing	= testing
 	end
 
+	# Initializes the queries array so we can call
+	# functions like has_next? and others.
+	def populate(config)
+		@queries = []
+		results = query("SELECT * FROM #{config['queries_table']};")
+		while r = results.fetch_hash
+			@queries << r
+		end
+	end
 
 	# Abstract query function
 	def query(q)

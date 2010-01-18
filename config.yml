@@ -1,1 +1,19 @@
+# Database information
+db_user: root
+db_pass: root
+db_db: segments_tester
+
+
+# This table should have two attributes,
+# query and solution.
+# Query should be what we send to the engines
+# Solution should be what they should return (in a perfect world)
+queries_table: queries
+
+
+
+
+# This is just using by rspec testing
+# to verify the yaml is all good
+# i.e.  Ignore and don't change this
 rspec_test_var: true
