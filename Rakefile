@@ -11,7 +11,7 @@ namespace "test" do
 
 	desc 'Setup the test db'
 	task :setup do
-		require "lib/tasks/prepare_tests_db"
+		require "lib/prepare_tests_db"
 		ptdb = PrepareTestsDb.new
 		ptdb.setup
 	end

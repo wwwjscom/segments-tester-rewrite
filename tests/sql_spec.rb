@@ -1,9 +1,16 @@
 require 'code/sql'
+require "code/configs"
 
 describe SQL do
 	
 	before(:all) do
 		@db = SQL.new('root', 'root', 'segments_tester', true)
+	end
+	
+	it 'should populate @queries' do
+		@db.populate(Configs.read_yml)
+		@db.queries.class.should == Array
+		@db.queries[0].class.should == Hash
 	end
 	
   it 'should initialize correctly' do
@@ -26,11 +33,5 @@ describe SQL do
   it 'should query correctly with an empty string' do
     results = @db.query ''
   end
-
-	it 'should populate @queries' do
-		@db.populate(Config.read_yml)
-		@db.queries.class.should == Array
-		@db.queries[0].class.should == Hash
-	end
 
 end

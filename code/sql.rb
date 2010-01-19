@@ -14,11 +14,21 @@ class SQL
 	# Initializes the queries array so we can call
 	# functions like has_next? and others.
 	def populate(config)
+		@queries_index = 0 # tracks our location within the queries array
 		@queries = []
 		results = query("SELECT * FROM #{config['queries_table']};")
 		while r = results.fetch_hash
 			@queries << r
 		end
+	end
+	
+	def has_next?
+		@queries_index <= @queries.size
+	end
+	
+	def next
+		# return next hash...
+		@queries_index += 1
 	end
 
 	# Abstract query function

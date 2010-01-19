@@ -1,0 +1,15 @@
+# Required add-ons
+
+* Ruby/MySQL
+* MySQL
+* Ruby >= 1.8.7
+
+# Production
+
+Setup a database called 'segments_tester'.  Internal tables will be managed by the program.
+
+# Testing
+
+Be sure to set the environment variable SEG_ENV to test via the command line.  Ex: $rake test:rspec SEG_ENV=test
+
+Setup a testing database called 'segments_1234'.  Tables within this database will be dropped and recreated upon testing so do not store important data here.

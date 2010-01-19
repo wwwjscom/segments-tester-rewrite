@@ -1,4 +1,5 @@
 require 'code/main'
+require "spec"
 
 describe Main do
 	
@@ -14,7 +15,7 @@ describe Main do
 		@main.config["rspec_test_var"].should == true
 	end
 	
-#	it 'should be able to call run without error' do
-#		@main.run
-#	end
+	it 'should be able to call run without error' do
+		@main.run
+	end
 end
