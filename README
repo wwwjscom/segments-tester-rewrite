@@ -13,3 +13,5 @@ Setup a database called 'segments_tester'.  Internal tables will be managed by t
 Be sure to set the environment variable SEG_ENV to test via the command line.  Ex: $rake test:rspec SEG_ENV=test
 
 Setup a testing database called 'segments_1234'.  Tables within this database will be dropped and recreated upon testing so do not store important data here.
+
+Before calling rake test:rspec, you must first call rake test:setup.  You only need to call this once.  It'll setup all the required tables for testing.
