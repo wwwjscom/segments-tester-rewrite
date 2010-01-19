@@ -6,7 +6,7 @@ class PrepareTestsDb
 	
 	def initialize
 		@config = Configs.read_yml
-		@mysql = SQL.new(@config["db_user"], @config["db_pass"], @config["db_test_db"])
+		@mysql = SQL.new
 	end
 	
 	def setup
