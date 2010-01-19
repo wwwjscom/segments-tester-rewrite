@@ -34,8 +34,7 @@ class SetupSolutionsTables < Application
 	
 	# Drops the given table from the db
 	def drop_table(table_suffix = nil)
-		sql = SQL.new
-		sql.query "DROP TABLE IF EXISTS #{@config['queries_table']}#{table_suffix}"
+		sql = SQL.drop_table(table_suffix)
 	end
 	
 	# Inserts a set of data into the correct table

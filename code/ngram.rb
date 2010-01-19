@@ -25,7 +25,14 @@ class Ngram
 		@sql = SQL.new
 		@matches = []
 		@grams.each do |gram|
-			@matches << @sql.query("SELECT query FROM #{@config['queries_table']} WHERE LCASE(ngram) = LCASE('#{gram}')").fetch_hash
+			results = @sql.query "SELECT solution FROM #{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
+			if results.class == Array
+				@matches << results				
+			else
+				while r = results.fetch_hash do
+					@matches << r
+				end
+			end
 		end
 		@matches
 	end

@@ -3,10 +3,10 @@
 require 'rake'
 require 'spec/rake/spectask'
 
-namespace :setup do
+namespace "setup" do
 	
 	desc "Setup the solutions tables"
-	task :s_tables do
+	task :tables do
 		require "lib/setup_solutions_tables"
 		sst = SetupSolutionsTables.new
 		
@@ -29,15 +29,23 @@ namespace :setup do
 end
 
 namespace "test" do
+	
+	desc "Setup and run all rspec tests"
+	task :run => [:tables, :rspec] do
+	end
+	
 	desc 'Run all rspec tests'
 	Spec::Rake::SpecTask.new('rspec') do |t|
 		t.spec_files = FileList['tests/**/*.rb']
 	end
 
-	desc 'Setup the test db'
+	# This task should be deprecated
+	desc 'Setup the test db -- deprecated...?'
 	task :setup do
 		require "lib/prepare_tests_db"
 		ptdb = PrepareTestsDb.new
 		ptdb.setup
 	end
 end
+
+task :tables => ["setup:tables"]

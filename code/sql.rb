@@ -33,6 +33,13 @@ class SQL < Application
 		@queries[@queries_index-1]
 	end
 
+	# Drops the given table from the db
+	def self.drop_table(table_suffix = nil)
+		@config = Configs.read_yml
+		sql = self.new
+		sql.query "DROP TABLE IF EXISTS #{@config['queries_table']}#{table_suffix}"
+	end
+
 	# Abstract query function
 	def query(q)
 		_query(q)

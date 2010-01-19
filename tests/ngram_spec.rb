@@ -40,4 +40,10 @@ describe Ngram do
 		@grams_4.grams[9].should == nil
 	end
 	
+	it 'should find with >1 matching 3gram' do
+		matches = @grams_3.find
+		matches.class.should == Array
+		matches[0]["solution"].should == 'query0'
+	end 
+	
 end

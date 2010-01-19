@@ -1,10 +1,12 @@
 require "tempfile"
+require "code/configs"
 
 class DMSoundex
 
 	attr_reader :query, :encoding
 
 	def initialize(query)
+		@config = Configs.read_yml
 		@query = query
 		encode(@query)
 	end
@@ -19,4 +21,15 @@ class DMSoundex
 		file.close! # unlinks the temp file
 	end
 	
+	def find
+		@matches = []
+		sql = SQL.new
+		results = sql.query "SELECT * FROM #{@config['queries_table']}_dm_soundex WHERE dmsoundex = #{@encoding}"
+		unless results.num_rows == 1
+			while r = results.fetch_hash
+				@matches << r
+			end
+		end
+		@matches
+	end
 end
