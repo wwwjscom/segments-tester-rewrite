@@ -2,10 +2,11 @@ require "code/configs"
 require "code/ngram"
 require "code/sql"
 require "code/application"
+require "code/dm_soundex"
 
 class SetupSolutionsTables < Application
 
-	attr_accessor :ngram_objs
+	attr_accessor :ngram_objs, :dm_soundex_objs
 
 	def initialize
 		@config = Configs.read_yml
@@ -36,7 +37,41 @@ class SetupSolutionsTables < Application
 		sql = SQL.new
 		sql.query "DROP TABLE IF EXISTS #{@config['queries_table']}#{table_suffix}"
 	end
-
+	
+	# Inserts a set of data into the correct table
+	def insert(type, type_attr, solution)
+		sql = SQL.new
+		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+		sql.query "INSERT INTO #{@config['queries_table']}#{type} VALUES ('#{type_attr}', '#{solution}')"
+	end
+	
+	# Parses the line and returns a hash of its contents
+	def parse(line)
+		hash = { :mispelled => line.split(',')[0], :solution => line.split(',')[1] }
+	end
+	
+	
+	# --- DM Soundex Methods ---
+	
+	# Generate the DM Soundex codes from the solutions prior to insertion
+	def generate_dm_soundex_encodings
+		@dm_soundex_objs = []
+		@lines.each do |line|
+			query = parse(line)[:mispelled]
+			@dm_soundex_objs << DMSoundex.new(query)
+		end
+	end
+	
+	def insert_dm_soundex_encodings
+		@dm_soundex_objs.each do |obj|
+			encoding = obj.encoding
+			insert('_dm_soundex', encoding, obj.query)
+		end
+	end
+	
+	
+	# --- NGram Methods ---
+	
 	# Generates the ngrams from the solutions prior to inserting them
 	def generate_ngrams(n)
 		@ngram_objs = [] # Holds a bunch of ngram objects
@@ -54,17 +89,5 @@ class SetupSolutionsTables < Application
 				insert(type, gram, obj.query)
 			end
 		end
-	end
-	
-	# Inserts a set of data into the correct table
-	def insert(type, type_attr, solution)
-		sql = SQL.new
-		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
-		sql.query "INSERT INTO #{@config['queries_table']}#{type} VALUES ('#{type_attr}', '#{solution}')"
-	end
-	
-	# Parses the line and returns a hash of its contents
-	def parse(line)
-		hash = { :mispelled => line.split(',')[0], :solution => line.split(',')[1] }
 	end
 end

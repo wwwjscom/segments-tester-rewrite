@@ -14,6 +14,16 @@ namespace :setup do
 		sst.drop_table('_3grams')
 		sst.generate_ngrams(3)
 		sst.insert_ngrams(3)
+		
+		# Generate and insert the 4grams
+		sst.drop_table('_4grams')
+		sst.generate_ngrams(4)
+		sst.insert_ngrams(4)
+		
+		# Generate and insert DM Soundex
+		sst.drop_table('_dm_soundex')
+		sst.generate_dm_soundex_encodings
+		sst.insert_dm_soundex_encodings
 	end
 	
 end
