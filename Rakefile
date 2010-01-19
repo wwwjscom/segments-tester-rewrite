@@ -3,6 +3,21 @@
 require 'rake'
 require 'spec/rake/spectask'
 
+namespace :setup do
+	
+	desc "Setup the solutions tables"
+	task :s_tables do
+		require "lib/setup_solutions_tables"
+		sst = SetupSolutionsTables.new
+		
+		# Generate and insert the 3grams
+		sst.drop_table('_3grams')
+		sst.generate_ngrams(3)
+		sst.insert_ngrams(3)
+	end
+	
+end
+
 namespace "test" do
 	desc 'Run all rspec tests'
 	Spec::Rake::SpecTask.new('rspec') do |t|

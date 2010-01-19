@@ -11,7 +11,7 @@ class PrepareTestsDb
 	
 	def setup
 		@mysql.query("DROP TABLE IF EXISTS queries")
-		@mysql.query("CREATE TABLE queries (`query` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)")
+		@mysql.query("CREATE TABLE queries (`mispelled` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)")
 		@mysql.query("INSERT INTO queries VALUES('query0', 'solution0'), ('query1', 'solution1'), ('query2', 'solution2')")
 		
 		

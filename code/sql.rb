@@ -1,10 +1,11 @@
 require 'mysql'
+require "code/application"
 
-class SQL
+class SQL < Application
 	
 	attr_reader :user, :pass, :database, :queries
 	
-	def initialize(user = Configs.read_yml["db_user"], pass = Configs.read_yml["db_pass"], db = Configs.read_yml["db_db"], testing = false)
+	def initialize(user = Configs.read_yml["db_user"], pass = Configs.read_yml["db_pass"], db = get_db, testing = false)
 		@user		= user
 		@pass		= pass
 		@database	= db
