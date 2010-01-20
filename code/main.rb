@@ -28,7 +28,7 @@ class Main < Application
 			attrs = @sql.next
 			solution 	= attrs["solution"]
 			misspelled 	= attrs["misspelled"]
-			
+						
 			@t = Tester.new
 			@t.find(misspelled)
 			
@@ -61,10 +61,10 @@ class Main < Application
 		@s_seg.calculate
 		
 		# Display the results
-		p @s_3grams.to_s
-		p @s_4grams.to_s
-		p @s_dm.to_s
-		p @s_seg.to_s
+		puts @s_3grams.to_s
+		puts @s_4grams.to_s
+		puts @s_dm.to_s
+		puts @s_seg.to_s
 	end
 	
 	def debug(misspelled)

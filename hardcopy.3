@@ -1,0 +1,62 @@
++-------------------------+
+4 rows in set (0.00 sec)
+
+mysql> drop table queries_3grams
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_segments_1234 |
++-------------------------+
+| queries_4grams          |
+| queries_dm_soundex      |
+| queries_misspelled      |
++-------------------------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_segments_1234 |
++-------------------------+
+| queries_3grams          |
+| queries_4grams          |
+| queries_dm_soundex      |
+| queries_misspelled      |
++-------------------------+
+4 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_segments_1234 |
++-------------------------+
+| queries_3grams          |
+| queries_4grams          |
+| queries_dm_soundex      |
+| queries_misspelled      |
++-------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from queries_dm_soundex;
++-----------+-----------+
+| dmsoundex | solution  |
++-----------+-----------+
+| 483600    | solution0 |
+| 483600    | solution1 |
+| 483600    | solution2 |
++-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from queries_mispelled;
+ERROR 1146 (42S02): Table 'segments_1234.queries_mispelled' doesn't exist
+mysql> select * from queries_misspelled;
++------------+-----------+
+| misspelled | solution  |
++------------+-----------+
+| solutio0   | solution0 |
+| solutio1   | solution1 |
+| solutio2   | solution2 |
++------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql>
