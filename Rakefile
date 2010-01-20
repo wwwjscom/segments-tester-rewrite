@@ -55,4 +55,11 @@ namespace "test" do
 #	end
 end
 
+desc "Setup and run the program"
+task :default => [:tables] do
+	require "code/main"
+	m = Main.new
+	m.run
+end
+
 task :tables => ["setup:tables"]

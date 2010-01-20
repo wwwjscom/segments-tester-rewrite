@@ -1,3 +1,2 @@
-30, solution0
-10, solution2
-10, solution1
+15, Slovakia
+5, Crazy Hard Query

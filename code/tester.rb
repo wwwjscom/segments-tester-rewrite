@@ -1,4 +1,6 @@
 require "code/ngram"
+require "code/segments"
+require "code/dm_soundex"
 
 class Tester
 	

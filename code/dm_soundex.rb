@@ -26,9 +26,11 @@ class DMSoundex < Application
 	def find
 		@matches = []
 		sql = SQL.new
-		results = sql.query "SELECT solution FROM #{@config['queries_table']}_dm_soundex WHERE dmsoundex = #{@encoding}"
-		unless results.num_rows == 1
-			while r = results.fetch_row
+		results = sql.query "SELECT solution FROM #{@config['queries_table']}_dm_soundex WHERE dmsoundex = '#{@encoding}'"	
+		if results.class == Array
+			@matches << results				
+		else
+			while r = results.fetch_row do
 				@matches << r
 			end
 		end
