@@ -1,5 +1,6 @@
-# Required add-ons
+# Requirements
 
+* PHP
 * Ruby/MySQL
 * MySQL
 * Ruby >= 1.8.7
