@@ -10,6 +10,13 @@ namespace "setup" do
 		require "lib/setup_solutions_tables"
 		sst = SetupSolutionsTables.new
 		
+		# Setup queries table where mispelled queries
+		# will be pulled from, and cnadidates will be
+		# checked against
+		sst.drop_table('_misspelled')
+		sst.setup_queries_table
+		
+		
 		# Generate and insert the 3grams
 		sst.drop_table('_3grams')
 		sst.generate_ngrams(3)

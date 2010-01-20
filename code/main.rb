@@ -17,7 +17,15 @@ class Main < Application
 		@sql.populate(@config) # setup function
 		while @sql.has_next?
 			attrs = @sql.next
-			#results = Tester.find(attrs["query"]) -- todo after setup rake tasks are complete
+			@t = Tester.new
+			@t.find(attrs["misspelled"])
+			
+			p attrs["misspelled"]
+			p @t.grams_3_candidates
+			p @t.grams_4_candidates
+			p @t.dm_candidates
+			p @t.seg_candidates
+			
 			# ...
 		end
 	end

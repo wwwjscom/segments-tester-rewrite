@@ -11,11 +11,11 @@ describe DMSoundex do
 	end
 	
 	it 'should find by encoding' do
-		dm = DMSoundex.new('query0')
+		dm = DMSoundex.new('solution0')
 		results = dm.find
 		results.size.should == 3
-		results['query0'].should == 1
-		results['query1'].should == 1
-		results['query2'].should == 1
+		results['solution0'].should == 1
+		results['solution1'].should == 1
+		results['solution2'].should == 1
 	end
 end

@@ -34,14 +34,14 @@ function queryDB($x,$y,$z)
 	 * Once live, remove this if statement */
 	if ($x == 'h' && $y == 'h') {
 
-		/* DEBUG: THIS NEED TO CHANGE WHEN WE QUERY DIFFERENT DATASETS!! */
-		$query="SELECT * FROM " . $db . "." . $queries_table . " WHERE LCASE(mispelled) LIKE LCASE(\"$z\")";
+		$query="SELECT * FROM " . $db . "." . $queries_table . "_misspelled WHERE LCASE(solution) LIKE LCASE(\"$z\")";
 //		echo $query."\n";
 		#echo "$query\n"; // DEBUG
 	} else {
-		$query="SELECT * FROM " . $db . "." . $queries_table . " WHERE LCASE(solution) LIKE LCASE(\"$z\")";	
+		$query="SELECT * FROM " . $db . "." . $queries_table . "_misspelled WHERE LCASE(solution) LIKE LCASE(\"$z\")";	
+//		echo $query;
 	}
-//echo "$query\n";
+//echo "$query\n";6 
 	$query_result=mysql_query($query);
 //echo mysql_num_rows($query_result)."\n";
 //	mysql_close();
@@ -63,7 +63,7 @@ function showResults($query_num,$query_result,$field)
 //			$field = 'query';
 //		}
 
-		$dis = mysql_result($query_result,$i,'mispelled');
+		$dis = mysql_result($query_result,$i,'solution');
 		if(!in_array($dis,$chosenList))
 		{
 			array_push($chosenList,$dis);

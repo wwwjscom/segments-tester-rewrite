@@ -15,7 +15,7 @@ class Application
 		matches.flatten!
 		keys = matches.uniq
 		keys.each do |key|
-			@hash[key] = matches.count(key)
+			@hash[key.chomp] = matches.count(key)
 		end
 		@hash
 	end

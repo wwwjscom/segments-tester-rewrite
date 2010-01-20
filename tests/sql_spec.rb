@@ -30,7 +30,7 @@ describe SQL do
 		3.times do |i|
 			hash = @db.next
 			hash.class.should == Hash
-			hash["mispelled"].should == "query#{i}"
+			hash["misspelled"].should == "solutio#{i}"
 			hash["solution"].should == "solution#{i}"
 		end
 	end

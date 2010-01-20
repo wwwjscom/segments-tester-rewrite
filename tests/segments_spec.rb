@@ -7,11 +7,11 @@ describe Segments do
 	end
 	
 	it 'should find' do
-		results = Segments.find('query0')
+		results = Segments.find('solution0')
 		results.class.should == Hash
-		results['query0'].should == 6
-		results['query1'].should == 3
-		results['query2'].should == 3
+		results['solution0'].should == 30
+		results['solution1'].should == 10
+		results['solution2'].should == 10
 	end
 	
 end

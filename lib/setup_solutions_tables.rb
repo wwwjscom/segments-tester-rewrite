@@ -46,7 +46,15 @@ class SetupSolutionsTables < Application
 	
 	# Parses the line and returns a hash of its contents
 	def parse(line)
-		hash = { :mispelled => line.split(',')[0], :solution => line.split(',')[1] }
+		hash = { :misspelled => line.split(',')[0].chomp, :solution => line.split(',')[1].chomp }
+	end
+	
+	
+	def setup_queries_table
+		@lines.each do |line|
+			line = parse(line)
+			insert('_misspelled', line[:misspelled], line[:solution])
+		end
 	end
 	
 	
@@ -56,7 +64,7 @@ class SetupSolutionsTables < Application
 	def generate_dm_soundex_encodings
 		@dm_soundex_objs = []
 		@lines.each do |line|
-			query = parse(line)[:mispelled]
+			query = parse(line)[:solution]
 			@dm_soundex_objs << DMSoundex.new(query)
 		end
 	end
@@ -75,7 +83,7 @@ class SetupSolutionsTables < Application
 	def generate_ngrams(n)
 		@ngram_objs = [] # Holds a bunch of ngram objects
 		@lines.each do |line|
-			query = parse(line)[:mispelled]
+			query = parse(line)[:solution]
 			@ngram_objs << Ngram.new(n, query)
 		end
 	end

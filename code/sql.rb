@@ -17,7 +17,7 @@ class SQL < Application
 	def populate(config)
 		@queries_index = 0 # tracks our location within the queries array
 		@queries = []
-		results = query("SELECT * FROM #{config['queries_table']};")
+		results = query("SELECT * FROM #{config['queries_table']}_misspelled;")
 		while r = results.fetch_hash
 			@queries << r
 		end
