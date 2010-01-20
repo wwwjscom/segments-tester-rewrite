@@ -17,6 +17,13 @@ class Evaluator
 		
 		sorted = @candidates_hash.sort{ |x,y| y[1] <=> x[1] }
 		rank = sorted.flatten.index(@solution)
-		(rank > 0) ? rank-1 : rank
+		
+		# Now find the true rank.  That is, if there is a tie amoung the
+		# number of votes, select the index of the first candidate with
+		# that many votes, instead of arbitrarly selecting its rank.
+		votes = sorted.flatten[rank+1]
+		true_rank = sorted.flatten.index(votes)
+		
+		(true_rank > 0) ? true_rank-1 : true_rank
 	end
 end
