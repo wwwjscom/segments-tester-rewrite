@@ -6,6 +6,7 @@ describe Ngram do
 	before(:all) do
 		@grams_3 = Ngram.new(3, 'test query')
 		@grams_4 = Ngram.new(4, 'test query')
+		@search_3grams = Ngram.new(3, 'query0')
 	end
 	
 	it 'should initialize' do
@@ -41,9 +42,11 @@ describe Ngram do
 	end
 	
 	it 'should find with >1 matching 3gram' do
-		matches = @grams_3.find
-		matches.class.should == Array
-		matches[0]["solution"].should == 'query0'
+		matches = @search_3grams.find
+		matches.class.should == Hash
+		matches['query0'].should == 5
+		matches['query1'].should == 3
+		matches['query2'].should == 3
 	end 
 	
 end

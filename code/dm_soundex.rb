@@ -1,7 +1,9 @@
 require "tempfile"
 require "code/configs"
+require "code/application"
 
-class DMSoundex
+
+class DMSoundex < Application
 
 	attr_reader :query, :encoding
 
@@ -24,12 +26,13 @@ class DMSoundex
 	def find
 		@matches = []
 		sql = SQL.new
-		results = sql.query "SELECT * FROM #{@config['queries_table']}_dm_soundex WHERE dmsoundex = #{@encoding}"
+		results = sql.query "SELECT solution FROM #{@config['queries_table']}_dm_soundex WHERE dmsoundex = #{@encoding}"
 		unless results.num_rows == 1
-			while r = results.fetch_hash
+			while r = results.fetch_row
 				@matches << r
 			end
 		end
 		@matches
+		organize_votes(@matches)
 	end
 end

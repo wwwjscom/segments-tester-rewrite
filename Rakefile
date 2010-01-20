@@ -39,13 +39,13 @@ namespace "test" do
 		t.spec_files = FileList['tests/**/*.rb']
 	end
 
-	# This task should be deprecated
-	desc 'Setup the test db -- deprecated...?'
-	task :setup do
-		require "lib/prepare_tests_db"
-		ptdb = PrepareTestsDb.new
-		ptdb.setup
-	end
+#	# This task should be deprecated
+#	desc 'Setup the test db -- deprecated...?'
+#	task :setup do
+#		require "lib/prepare_tests_db"
+#		ptdb = PrepareTestsDb.new
+#		ptdb.setup
+#	end
 end
 
 task :tables => ["setup:tables"]

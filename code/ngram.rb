@@ -1,7 +1,8 @@
 require "mysql"
 require "code/configs"
+require "code/application"
 
-class Ngram
+class Ngram < Application
 
 	attr_accessor :grams, :query
 	
@@ -20,6 +21,7 @@ class Ngram
 	end
 	
 	# Searches for query using a gram of size n
+	# Retuns a list of candidates
 	def find
 		@config = Configs.read_yml
 		@sql = SQL.new
@@ -29,11 +31,13 @@ class Ngram
 			if results.class == Array
 				@matches << results				
 			else
-				while r = results.fetch_hash do
+				while r = results.fetch_row do
 					@matches << r
 				end
 			end
 		end
 		@matches
+		organize_votes(@matches)
 	end
+	
 end

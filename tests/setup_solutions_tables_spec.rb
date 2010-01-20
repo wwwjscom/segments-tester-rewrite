@@ -33,17 +33,13 @@ describe SetupSolutionsTables do
 		objs = @sst.ngram_objs
 		objs.class.should == Array
 		objs[0].grams[0].should == 'quer'
-	end
+	end	
 	
 	it 'should generate dm soundex encodings' do
 		@sst.generate_dm_soundex_encodings
 		objs = @sst.dm_soundex_objs
 		objs.class.should == Array
 		objs[0].encoding.should == '590000'
-	end
-	
-	it 'should insert dm soundex encodings' do
-		@sst.insert_dm_soundex_encodings
 	end
 
 	

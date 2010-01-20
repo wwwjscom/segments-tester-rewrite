@@ -14,7 +14,8 @@ describe DMSoundex do
 		dm = DMSoundex.new('query0')
 		results = dm.find
 		results.size.should == 3
-		results[0]["dmsoundex"].should == '590000'
-		results[0]["solution"].should == 'query0'
+		results['query0'].should == 1
+		results['query1'].should == 1
+		results['query2'].should == 1
 	end
 end
