@@ -1,0 +1,8 @@
+<?php  Axial_Configuration_Yaml::$_tempData['./__config.yml'] = array (
+  'db_user' => 'root',
+  'db_pass' => 'root',
+  'db_db' => 'segments_tester',
+  'db_test_db' => 'segments_1234',
+  'queries_table' => 'queries',
+  'rspec_test_var' => true,
+); ?>
