@@ -11,6 +11,12 @@ describe Evaluator do
 		# Setup an example to utalize true rank (notice the tie amoung votes...)
 		candidates_hash = {"solution2"=>10, "solution0"=>10, "solution1"=>10}
 		@e2 = Evaluator.new(candidates_hash, solution)
+
+		candidates_hash = {"solution2"=>10, "solution0"=>5, "solution1"=>10}
+		@e3 = Evaluator.new(candidates_hash, "solution0")
+		
+		candidates_hash = {"solution2"=>10, "solution0"=>5, "solution1"=>8}
+		@e4 = Evaluator.new(candidates_hash, "solution1")
 		
 		# Setup an example where solution isn't found
 		candidates_hash = {"solution1"=>10, "solution2"=>10}		
@@ -26,8 +32,16 @@ describe Evaluator do
 	end
 	
 	it 'should rank' do
-		@e.rank.should == 0
-		@e2.rank.should == 0
+		@e.rank.should == 1
+		@e2.rank.should == 1
+		@e3.rank.should == 3
+		@e4.rank.should == 2
 	end
 
+	it 'should compute confidence' do
+		@e.confidence.should == 0.5
+		@e2.confidence.should == 0.33
+		@e3.confidence.should == 0.2
+		@e4.confidence.should == 0.35
+	end
 end
