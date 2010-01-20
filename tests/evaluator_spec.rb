@@ -44,4 +44,10 @@ describe Evaluator do
 		@e3.confidence.should == 0.2
 		@e4.confidence.should == 0.35
 	end
+	
+	it 'should compare confidence' do
+		Evaluator.compare_confidence(@e, @e2).should == "e1"
+		Evaluator.compare_confidence(@e2, @e3).should == "e1"
+		Evaluator.compare_confidence(@e3, @e4).should == "e2"
+	end
 end

@@ -1,3 +1,5 @@
+require "code/configs"
+
 class Evaluator
 
 	# Initializes with an engines candidates hash, and the solution
@@ -30,5 +32,19 @@ class Evaluator
 		@total_votes = 0
 		@candidates_hash.to_a.flatten.each { |x| @total_votes += x.to_i }
 		("%.2f" % (@solution_votes.to_f/@total_votes.to_f)).to_f
+	end
+	
+	# Give two evaluator instances, do the following:
+	# If e1 has a confidence lower than the threashold,
+	# compare the two and return the higher of the two.
+	def self.compare_confidence(e1, e2)
+		@config = Configs.read_yml
+
+		if e1.confidence <= @config["confidence_threashold"].to_f
+			ret =  (e1.confidence < e2.confidence) ? "e2" : "e1"
+		else
+			ret = "e1"
+		end
+		ret
 	end
 end

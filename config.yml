@@ -10,7 +10,8 @@ db_test_db: segments_1234
 # This will also be used as the prefix for other tables, such at 3grams
 queries_table: queries
 
-
+# If segments is below this threashold, we'll consider using the 3grams results
+confidence_threashold: 0.2
 
 
 # This is just using by rspec testing
