@@ -27,22 +27,10 @@ class Main < Application
 			@t = Tester.new
 			@t.find(misspelled)
 			
-			
-			
-			p misspelled
-			
-			p @t.grams_3_candidates
-			@eval_3grams = Evaluator.new(@t.grams_3_candidates, solution)
-			p @eval_3grams.found?
-			p @eval_3grams.rank
-			
-			p @t.grams_4_candidates
-			p @t.dm_candidates
-			
-			p @t.seg_candidates
-			@eval_seg = Evaluator.new(@t.seg_candidates, solution)
-			p @eval_seg.found?
-			p @eval_seg.rank
+			@eval_3grams 	= Evaluator.new(@t.grams_3_candidates, solution)
+			@eval_4grams 	= Evaluator.new(@t.grams_4_candidates, solution)
+			@eval_dm 		= Evaluator.new(@t.dm_candidates, solution)
+			@eval_seg 		= Evaluator.new(@t.seg_candidates, solution)
 			
 			# Segments failed to meet the threshold, and is lower than 3grams,
 			# so use the 3grams results for segments.
@@ -50,9 +38,37 @@ class Main < Application
 				@eval_seg = @eval_3grams
 			end
 			
+			debug(misspelled)			
 			
 			# ...
 		end
+		
+	end
+	
+	def debug(misspelled)
+		p '-'*50
+		
+		p misspelled
+		
+		p '3grams'
+		p @t.grams_3_candidates
+		p @eval_3grams.found?
+		p @eval_3grams.rank if @eval_3grams.found?
+		
+		p '4grams'
+		p @t.grams_4_candidates
+		p @eval_4grams.found?
+		p @eval_4grams.rank if @eval_4grams.found?
+		
+		p 'dm'
+		p @t.dm_candidates
+		p @eval_dm.found?
+		p @eval_dm.rank if @eval_dm.found?
+		
+		p 'seg'
+		p @t.seg_candidates
+		p @eval_seg.found?
+		p @eval_seg.rank if @eval_seg.found?
 	end
 	
 end
