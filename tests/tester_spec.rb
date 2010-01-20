@@ -29,7 +29,13 @@ describe Tester do
 		dm_candidates["query0"].should == 1
 		dm_candidates["query1"].should == 1
 		dm_candidates["query2"].should == 1
-				
+		
+		# Segments checking
+		seg_candidates = @t.seg_candidates
+		seg_candidates.class.should == Hash		
+		seg_candidates["query0"].should == 6
+		seg_candidates["query1"].should == 3
+		seg_candidates["query2"].should == 3
 	end
 	
 end

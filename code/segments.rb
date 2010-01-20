@@ -1,6 +1,6 @@
 class Segments
 	
-	def find(query)
+	def self.find(query)
 		@candidates = {}
 		`php lib/segments/searchresults.php "#{query}"`
 		file = File.open('tmp/our_results.txt')
@@ -12,4 +12,5 @@ class Segments
 		end
 		@candidates
 	end
+	
 end

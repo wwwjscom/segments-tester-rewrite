@@ -2,7 +2,7 @@ require "code/ngram"
 
 class Tester
 	
-	attr_accessor :grams_3_candidates, :grams_4_candidates, :dm_candidates
+	attr_accessor :grams_3_candidates, :grams_4_candidates, :dm_candidates, :seg_candidates
 	
 	# Queries all of our engines for the given query
 	def find(query)
@@ -14,6 +14,8 @@ class Tester
 
 		@dm = DMSoundex.new(query)
 		@dm_candidates = @dm.find
+		
+		@seg_candidates = Segments.find(query)
 		# ...
 	end	
 end

@@ -7,7 +7,7 @@ describe Segments do
 	end
 	
 	it 'should find' do
-		results = @seg.find('query0')
+		results = Segments.find('query0')
 		results.class.should == Hash
 		results['query0'].should == 6
 		results['query1'].should == 3
