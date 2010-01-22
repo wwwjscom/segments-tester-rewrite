@@ -84,6 +84,7 @@ class TRECOCRParser
 
 			line = line.chomp.downcase
 			line.split(' ').each do |l|
+				
 				if @force_skip_degraded.include?(i)
 					# skip
 				else
@@ -129,19 +130,23 @@ class TRECOCRParser
 	def print_files
 		@total = 0
 		@used = []
+		orig_offset	= @force_skip_origin.size
+		deg_offset 	= @force_skip_degraded.size
+#		deg_offset 	= @force_skip_degraded.size - @force_skip_origin.size+1
 		(0..@degraded_lines.size-1).each do |i|
 			orig_query 	= @doc_lines[i]
 			deg_query	= @degraded_lines[i]
 			
-			next if bad_queries(orig_query, deg_query, i)
+			if ARGV[1] != nil
+				next if bad_queries(orig_query, deg_query, i)
+			end
 			
-			puts "#{i}\t#{@doc_lines[i]} \t\t\t #{@degraded_lines[i]}"
-#			puts "#{@doc_lines[i].length}"
+			puts "#{i}\t#{i+orig_offset}\t#{@doc_lines[i].center(20)} \t\t#{i+deg_offset}\t#{@degraded_lines[i]}"
 			@out_file.puts "#{@degraded_lines[i]},#{@doc_lines[i]}"
 			@total += 1
 		end
 		p @total
-		puts "Offset: #{@force_skip_degraded.size - @force_skip_origin.size+1}"
+		puts "Offset: #{orig_offset}, #{deg_offset}"
 	end
 	
 	def main
@@ -160,8 +165,8 @@ class TRECOCRParser
 end
 
 
-force_skip_origin	= [589]
-force_skip_degraded = [401,458,984,1015,1250,1556,1557,2019,2409,2410,2588,2757,2842,2844,2846,2851,2853,2865,2871,3030,3032,3051,3054,3494,3521,3522,3821,3822,4710]
+force_skip_origin	= [589,4793,4814,4922,4925,5221,5231,5242,5252,6640,6679,6681,6707,6746,6747,6756,8911]
+force_skip_degraded = [10052,9879,9910,9920,9346,9419,9837,9856,7931,7949,7969,7991,8014,8307,8330,8676,5899,6143,5676,5788,5806,5826,5872,401,458,984,1015,1250,1556,1557,2019,2409,7163,7199,7208,7323,7347,7630,7765,7796,2410,2588,2757,2842,2844,2846,2851,2853,2865,2871,3030,3032,3051,3054,3494,3521,3522,3821,3822,4710,4875]
 
-t = TRECOCRParser.new(4800, force_skip_degraded, force_skip_origin)
+t = TRECOCRParser.new(ARGV[0].to_i, force_skip_degraded, force_skip_origin)
 t.main
