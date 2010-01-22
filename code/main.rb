@@ -11,6 +11,10 @@ class Main < Application
 	attr_reader :config
 	
 	def initialize
+    begin
+      File.delete('tmp/segments_log.txt')
+    rescue
+    end
 		@config 	= Configs.read_yml
 		@sql		= SQL.new
 		@s_3grams 	= Stats.new('3grams')
@@ -32,6 +36,7 @@ class Main < Application
 			@t = Tester.new
 			@t.find(misspelled)
 			
+      puts "Solution: #{solution}"
 			@eval_3grams 	= Evaluator.new(@t.grams_3_candidates, solution)
 			@eval_4grams 	= Evaluator.new(@t.grams_4_candidates, solution)
 			@eval_dm 		= Evaluator.new(@t.dm_candidates, solution)
@@ -39,9 +44,9 @@ class Main < Application
 			
 			# Segments failed to meet the threshold, and is lower than 3grams,
 			# so use the 3grams results for segments.
-			if Evaluator.compare_confidence(@eval_seg, @eval_3grams) == "e2"
-				@eval_seg = @eval_3grams
-			end
+		#	if Evaluator.compare_confidence(@eval_seg, @eval_3grams) == "e2"
+		#		@eval_seg = @eval_3grams
+		#	end
 		
 			# Add to the stats instance variables
 			@s_3grams.add(@eval_3grams)
@@ -65,6 +70,7 @@ class Main < Application
 		puts @s_4grams.to_s
 		puts @s_dm.to_s
 		puts @s_seg.to_s
+
 	end
 	
 	def debug(misspelled)

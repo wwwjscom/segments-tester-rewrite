@@ -35,17 +35,28 @@ function queryDB($x,$y,$z)
 	if ($x == 'h' && $y == 'h') {
 
 		$query="SELECT * FROM " . $db . "." . $queries_table . "_misspelled WHERE LCASE(solution) LIKE LCASE(\"$z\")";
-//		echo $query."\n";
+		echo $query."\n";
 		#echo "$query\n"; // DEBUG
 	} else {
 		$query="SELECT * FROM " . $db . "." . $queries_table . "_misspelled WHERE LCASE(solution) LIKE LCASE(\"$z\")";	
-//		echo $query;
+		echo $query."\n";
 	}
 //echo "$query\n";6 
 	$query_result=mysql_query($query);
 //echo mysql_num_rows($query_result)."\n";
 //	mysql_close();
+
+  logger($query);
+
 	return $query_result;
+}
+
+function logger($msg)
+{
+  $myFile = "tmp/segments_log.txt";
+  $fh = fopen($myFile, 'a') or die("can't open file");
+  fwrite($fh, $msg."\n");
+  fclose($fh);
 }
 
 function showResults($query_num,$query_result,$field)
@@ -134,27 +145,24 @@ function method1($query,$et)
 	$newstr = $query;
 	$len = strlen($query);
 	
+  logger('a1');
+
 	for($i=0;$i<$et;$i++)
 		//Prevents running the function is the query is too short, or the ET has been rearched.
-		if(strlen($newstr)>3 && ($query_num<1 || $et>$i))
+		if(strlen($newstr)>3)
 		{
-			$newstr = substr_replace(substr_replace($newstr, '', 0,1), '', -1,$len);	
-			$newstr = "%$newstr%";
+			//$newstr = substr_replace(substr_replace($newstr, '', 0,1), '', -1,$len);	
+			$newstr = substr($newstr, 1,-1);	
+			//$newstr = "%$newstr%";
 
-			$Pquery_result=queryDB('p','p',"$newstr");
+      if(strlen($newstr) == 2)
+        break;
+
+      logger($newstr);
+
+			$Pquery_result=queryDB('p','p',"%".$newstr."%");
 			$Pquery_num=mysql_num_rows($Pquery_result);
 
-			$Oquery_result=queryDB('o','o',$newstr);
-			$Oquery_num=mysql_num_rows($Oquery_result);
-
-			$Mquery_result=queryDB('m','m',$newstr);
-			$Mquery_num=mysql_num_rows($Mquery_result);
-
-			$Tquery_result=queryDB('t','t',$newstr);
-			$Tquery_num=mysql_num_rows($Tquery_result);
-
-			$Hquery_result=queryDB('h','h',$newstr);
-			$Hquery_num=mysql_num_rows($Hquery_result);
 
 			$list1=array();
 			$list2=array();
@@ -193,6 +201,7 @@ function method1($query,$et)
 function method3($query,$et)
 {
 
+  logger('a3');
 	$newstr = $query;
 	$len = strlen($query);
 	$origLen = $len;
@@ -200,28 +209,20 @@ function method3($query,$et)
 	//$newstr = "$newstr, ";//REQURED due to the format of the current database...all entries include a , and space at the end...for some reason...
 	for($i=0;$i<$et;$i++)
 		//Prevents running the function is the query is too short, or the ET has been rearched.
-		if(strlen($newstr)>3 && ($query_num<1 || $et>$i))
+		if(strlen($newstr)>3)
 		{
-			$newstr = substr_replace($newstr, '%', ($len/2),2);	
-			if($i%2==0)
-				$len = $len+1;
-			else
-				$len = ($origLen/2)-1;
+			$newstr = str_replace('%', '', $newstr);	
+			$newstr = substr_replace($newstr, '%', ($len/2),1);	
+			#if($i%2==0)
+			#	$len = $len+1;
+			#else
+			#	$len = ($origLen/2)-1;
+      $len = strlen($newstr)-1;
 
-			$Pquery_result=queryDB('p','p',"$newstr");
+      logger($newstr);
+
+			$Pquery_result=queryDB('p','p',"%".$newstr."%");
 			$Pquery_num=mysql_num_rows($Pquery_result);
-
-			$Oquery_result=queryDB('o','o',$newstr);
-			$Oquery_num=mysql_num_rows($Oquery_result);
-
-			$Mquery_result=queryDB('m','m',$newstr);
-			$Mquery_num=mysql_num_rows($Mquery_result);
-
-			$Tquery_result=queryDB('t','t',$newstr);
-			$Tquery_num=mysql_num_rows($Tquery_result);
-
-			$Hquery_result=queryDB('h','h',$newstr);
-			$Hquery_num=mysql_num_rows($Hquery_result);
 
 			$list1=array();
 			$list2=array();
@@ -230,7 +231,7 @@ function method3($query,$et)
 			$list5=array();
 
 			if($Pquery_num>0)
-				$list1=showResults($Pquery_num,$Pquery_result,'mispelled');
+				$list1=showResults($Pquery_num,$Pquery_result,'solution');
 			if($Oquery_num>0)
 				$list2=showResults($Oquery_num,$Oquery_result,'mispelled');
 			if($Mquery_num>0)
@@ -243,7 +244,8 @@ function method3($query,$et)
 		}else{
 			//echo "Warning: Threshold Reached\n\n";
 		}
-		return array_merge($list1,$list2,$list3,$list4, $list5);
+		//return array_merge($list1,$list2,$list3,$list4, $list5);
+		return $list1;
 }
 
 /*
@@ -255,6 +257,7 @@ function method3($query,$et)
  */
 function method4($query,$et)
 {
+  logger('a4');
 
 	$newstr = $query;
 	$len = strlen($query);
@@ -264,20 +267,10 @@ function method4($query,$et)
 		$newstr = substr_replace($newstr, '%', 0,$len/2);	
 	//	$newstr = "$newstr, ";//REQURED due to the format of the current database...all entries include a , and space at the end...for some reason...
 
+    logger($newstr);
+
 		$Pquery_result=queryDB('p','p',"$newstr");
 		$Pquery_num=mysql_num_rows($Pquery_result);
-
-		$Oquery_result=queryDB('o','o',$newstr);
-		$Oquery_num=mysql_num_rows($Oquery_result);
-
-		$Mquery_result=queryDB('m','m',$newstr);
-		$Mquery_num=mysql_num_rows($Mquery_result);
-
-		$Tquery_result=queryDB('t','t',$newstr);
-		$Tquery_num=mysql_num_rows($Tquery_result);
-
-		$Hquery_result=queryDB('h','h',$newstr);
-		$Hquery_num=mysql_num_rows($Hquery_result);
 
 		$list1=array();
 		$list2=array();
@@ -314,6 +307,8 @@ function method4($query,$et)
 function method5($query,$et)
 {
 
+  logger('a5');
+
 	$newstr = $query;
 	$len = strlen($query);
 	
@@ -322,20 +317,11 @@ function method5($query,$et)
 		$newstr = substr_replace($newstr, '%', $len/2,$len);	
 	//	$newstr = "$newstr, ";//REQURED due to the format of the current database...all entries include a , and space at the end...for some reason...
 
+    logger($newstr);
+
 		$Pquery_result=queryDB('p','p',"$newstr");
 		$Pquery_num=mysql_num_rows($Pquery_result);
 
-		$Oquery_result=queryDB('o','o',$newstr);
-		$Oquery_num=mysql_num_rows($Oquery_result);
-
-		$Mquery_result=queryDB('m','m',$newstr);
-		$Mquery_num=mysql_num_rows($Mquery_result);
-
-		$Tquery_result=queryDB('t','t',$newstr);
-		$Tquery_num=mysql_num_rows($Tquery_result);
-
-		$Hquery_result=queryDB('h','h',$newstr);
-		$Hquery_num=mysql_num_rows($Hquery_result);
 
 		$list1=array();
 		$list2=array();
@@ -372,6 +358,8 @@ function method5($query,$et)
 function method6($query,$et)
 {
 
+  logger('a6');
+
 	$newstr = $query;
 	$len = strlen($query);
 
@@ -380,20 +368,11 @@ function method6($query,$et)
 		$newstr = substr_replace($newstr, '%', 1,$len-2);
 	//	$newstr = "$newstr, ";//REQURED due to the format of the current database...all entries include a , and space at the end...for some reason...
 
+    logger($newstr);
+
 		$Pquery_result=queryDB('p','p',"$newstr");
 		$Pquery_num=mysql_num_rows($Pquery_result);
 
-		$Oquery_result=queryDB('o','o',$newstr);
-		$Oquery_num=mysql_num_rows($Oquery_result);
-
-		$Mquery_result=queryDB('m','m',$newstr);
-		$Mquery_num=mysql_num_rows($Mquery_result);
-
-		$Tquery_result=queryDB('t','t',$newstr);
-		$Tquery_num=mysql_num_rows($Tquery_result);
-
-		$Hquery_result=queryDB('h','h',$newstr);
-		$Hquery_num=mysql_num_rows($Hquery_result);
 
 		$list1=array();
 		$list2=array();
@@ -428,6 +407,7 @@ function method6($query,$et)
  */
 function method7($query,$et)
 {
+  logger('a7');
 
 	$newstr = $query;
 	$len = strlen($query);
@@ -437,20 +417,11 @@ function method7($query,$et)
 		$newstr = substr_replace($newstr, '%', 2,$len-4);
 	//	$newstr = "$newstr, ";//REQURED due to the format of the current database...all entries include a , and space at the end...for some reason...
 
+    logger($newstr);
+
 		$Pquery_result=queryDB('p','p',"$newstr");
 		$Pquery_num=mysql_num_rows($Pquery_result);
 
-		$Oquery_result=queryDB('o','o',$newstr);
-		$Oquery_num=mysql_num_rows($Oquery_result);
-
-		$Mquery_result=queryDB('m','m',$newstr);
-		$Mquery_num=mysql_num_rows($Mquery_result);
-
-		$Tquery_result=queryDB('t','t',$newstr);
-		$Tquery_num=mysql_num_rows($Tquery_result);
-
-		$Hquery_result=queryDB('h','h',$newstr);
-		$Hquery_num=mysql_num_rows($Hquery_result);
 
 		$list1=array();
 		$list2=array();

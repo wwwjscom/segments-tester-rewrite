@@ -2,7 +2,7 @@
 /* DONT USE THESE FILES FOR WEBSITE PRODUCE USE.  They have been customized to be used by the segments tester
  * and are not fit for any other environment!! */
 require('lib/segments/sug_func.php');
-$et = 3;
+$et = 30;
 $query = $argv[1];
 $_GET['query'] = $query;
 

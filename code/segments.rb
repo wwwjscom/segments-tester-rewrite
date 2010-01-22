@@ -10,6 +10,7 @@ class Segments
 			condidate = line.split(', ')[1]
 			@candidates[condidate] = votes
 		end
+    p @candidates if ENV['DEBUG'] == 'true'
 		@candidates
 	end
 	

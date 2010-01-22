@@ -1,0 +1,626 @@
+a1
+egiste
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%egiste%")
+gist
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%gist%")
+a3
+hegi%ter
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hegi%ter%")
+heg%ter
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%heg%ter%")
+heg%er
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%heg%er%")
+he%er
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%er%")
+he%r
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%r%")
+h%r
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%h%r%")
+a4
+%ster
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ster")
+a5
+hegi%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hegi%")
+a6
+h%r
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("h%r")
+a7
+he%er
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("he%er")
+a1
+uesday
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%uesday%")
+esda
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%esda%")
+a3
+tues%ay1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tues%ay1%")
+tue%ay1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tue%ay1%")
+tue%y1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tue%y1%")
+tu%y1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tu%y1%")
+tu%1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tu%1%")
+t%1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%t%1%")
+a4
+%day1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%day1")
+a5
+tues%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("tues%")
+a6
+t%1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("t%1")
+a7
+tu%y1
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("tu%y1")
+a1
+ule
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ule%")
+a3
+hu%es
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hu%es%")
+hu%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hu%s%")
+h%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%h%s%")
+a4
+%les
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%les")
+a5
+hu%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hu%")
+a6
+h%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("h%s")
+a7
+hu%es
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hu%es")
+a1
+egulation
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%egulation%")
+gulatio
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%gulatio%")
+ulati
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ulati%")
+lat
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lat%")
+a3
+hegul%tions
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hegul%tions%")
+hegul%ions
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hegul%ions%")
+hegu%ions
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hegu%ions%")
+hegu%ons
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hegu%ons%")
+heg%ons
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%heg%ons%")
+heg%ns
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%heg%ns%")
+he%ns
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%ns%")
+he%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%s%")
+h%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%h%s%")
+a4
+%ations
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ations")
+a5
+hegul%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hegul%")
+a6
+h%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("h%s")
+a7
+he%ns
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("he%ns")
+a1
+epahtmen
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%epahtmen%")
+pahtme
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%pahtme%")
+ahtm
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ahtm%")
+a3
+lepah%ment
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lepah%ment%")
+lepa%ment
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lepa%ment%")
+lepa%ent
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lepa%ent%")
+lep%ent
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lep%ent%")
+lep%nt
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lep%nt%")
+le%nt
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%le%nt%")
+le%t
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%le%t%")
+l%t
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%l%t%")
+a4
+%tment
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tment")
+a5
+lepah%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("lepah%")
+a6
+l%t
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("l%t")
+a7
+le%nt
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("le%nt")
+a1
+ohlcultuh
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ohlcultuh%")
+hlcultu
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hlcultu%")
+lcult
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lcult%")
+cul
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%cul%")
+a3
+aohlc%ltuhe
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aohlc%ltuhe%")
+aohlc%tuhe
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aohlc%tuhe%")
+aohl%tuhe
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aohl%tuhe%")
+aohl%uhe
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aohl%uhe%")
+aoh%uhe
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aoh%uhe%")
+aoh%he
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aoh%he%")
+ao%he
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ao%he%")
+ao%e
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ao%e%")
+a%e
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%a%e%")
+a4
+%ultuhe
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ultuhe")
+a5
+aohlc%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("aohlc%")
+a6
+a%e
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("a%e")
+a7
+ao%he
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ao%he")
+a1
+aryetin
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aryetin%")
+ryeti
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ryeti%")
+yet
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%yet%")
+a3
+mary%ting
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mary%ting%")
+mary%ing
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mary%ing%")
+mar%ing
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mar%ing%")
+mar%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mar%ng%")
+ma%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ma%ng%")
+ma%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ma%g%")
+m%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%m%g%")
+a4
+%eting
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%eting")
+a5
+mary%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("mary%")
+a6
+m%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("m%g")
+a7
+ma%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ma%ng")
+a1
+row
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%row%")
+a3
+or%wn
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%or%wn%")
+or%n
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%or%n%")
+o%n
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%o%n%")
+a4
+%own
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%own")
+a5
+or%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("or%")
+a6
+o%n
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("o%n")
+a7
+or%wn
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("or%wn")
+a1
+rikon
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%rikon%")
+iko
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%iko%")
+a3
+ari%ona
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ari%ona%")
+ari%na
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ari%na%")
+ar%na
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ar%na%")
+ar%a
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ar%a%")
+a%a
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%a%a%")
+a4
+%kona
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%kona")
+a5
+ari%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ari%")
+a6
+a%a
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("a%a")
+a7
+ar%na
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ar%na")
+a1
+esignate
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%esignate%")
+signat
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%signat%")
+igna
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%igna%")
+a3
+lesig%ated
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lesig%ated%")
+lesi%ated
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lesi%ated%")
+lesi%ted
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lesi%ted%")
+les%ted
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%les%ted%")
+les%ed
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%les%ed%")
+le%ed
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%le%ed%")
+le%d
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%le%d%")
+l%d
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%l%d%")
+a4
+%nated
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%nated")
+a5
+lesig%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("lesig%")
+a6
+l%d
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("l%d")
+a7
+le%ed
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("le%ed")
+a1
+eportin
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%eportin%")
+porti
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%porti%")
+ort
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ort%")
+a3
+hepo%ting
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hepo%ting%")
+hepo%ing
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hepo%ing%")
+hep%ing
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hep%ing%")
+hep%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hep%ng%")
+he%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%ng%")
+he%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%g%")
+h%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%h%g%")
+a4
+%rting
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%rting")
+a5
+hepo%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hepo%")
+a6
+h%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("h%g")
+a7
+he%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("he%ng")
+a1
+equirement
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%equirement%")
+quiremen
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%quiremen%")
+uireme
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%uireme%")
+irem
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%irem%")
+a3
+hequir%ments
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hequir%ments%")
+hequi%ments
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hequi%ments%")
+hequi%ents
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hequi%ents%")
+hequ%ents
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hequ%ents%")
+hequ%nts
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hequ%nts%")
+heq%nts
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%heq%nts%")
+heq%ts
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%heq%ts%")
+he%ts
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%ts%")
+he%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%s%")
+h%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%h%s%")
+a4
+%ements
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ements")
+a5
+hequir%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hequir%")
+a6
+h%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("h%s")
+a7
+he%ts
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("he%ts")
+a1
+oenc
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%oenc%")
+a3
+aoe%cy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%aoe%cy%")
+ao%cy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ao%cy%")
+ao%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ao%y%")
+a%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%a%y%")
+a4
+%ncy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ncy")
+a5
+aoe%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("aoe%")
+a6
+a%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("a%y")
+a7
+ao%cy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ao%cy")
+a1
+a3
+us%a
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%us%a%")
+u%a
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%u%a%")
+a4
+%la
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%la")
+a5
+us%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("us%")
+a6
+u%a
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("u%a")
+a7
+us%la
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("us%la")
+a1
+ctlo
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ctlo%")
+a3
+act%on
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%act%on%")
+ac%on
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ac%on%")
+ac%n
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ac%n%")
+a%n
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%a%n%")
+a4
+%lon
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lon")
+a5
+act%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("act%")
+a6
+a%n
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("a%n")
+a7
+ac%on
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ac%on")
+a1
+ummah
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ummah%")
+mma
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mma%")
+a3
+sum%ahy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%sum%ahy%")
+sum%hy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%sum%hy%")
+su%hy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%su%hy%")
+su%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%su%y%")
+s%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%s%y%")
+a4
+%mahy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mahy")
+a5
+sum%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("sum%")
+a6
+s%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("s%y")
+a7
+su%hy
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("su%hy")
+a1
+doptln
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%doptln%")
+optl
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%optl%")
+a3
+adop%lng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%adop%lng%")
+ado%lng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ado%lng%")
+ado%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ado%ng%")
+ad%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ad%ng%")
+ad%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ad%g%")
+a%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%a%g%")
+a4
+%tlng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tlng")
+a5
+adop%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("adop%")
+a6
+a%g
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("a%g")
+a7
+ad%ng
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("ad%ng")
+a1
+odiffle
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%odiffle%")
+diffl
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%diffl%")
+iff
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%iff%")
+a3
+modi%fles
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%modi%fles%")
+modi%les
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%modi%les%")
+mod%les
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mod%les%")
+mod%es
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mod%es%")
+mo%es
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mo%es%")
+mo%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%mo%s%")
+m%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%m%s%")
+a4
+%ffles
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ffles")
+a5
+modi%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("modi%")
+a6
+m%s
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("m%s")
+a7
+mo%es
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("mo%es")
+a1
+eeyl
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%eeyl%")
+a3
+wee%ly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%wee%ly%")
+we%ly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%we%ly%")
+we%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%we%y%")
+w%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%w%y%")
+a4
+%yly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%yly")
+a5
+wee%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("wee%")
+a6
+w%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("w%y")
+a7
+we%ly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("we%ly")
+a1
+epor
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%epor%")
+a3
+hep%rt
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%hep%rt%")
+he%rt
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%rt%")
+he%t
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%he%t%")
+h%t
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%h%t%")
+a4
+%ort
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%ort")
+a5
+hep%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("hep%")
+a6
+h%t
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("h%t")
+a7
+he%rt
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("he%rt")
+a1
+all
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%all%")
+a3
+la%ly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%la%ly%")
+la%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%la%y%")
+l%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%l%y%")
+a4
+%lly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%lly")
+a5
+la%
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("la%")
+a6
+l%y
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("l%y")
+a7
+la%ly
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("la%ly")
+a1
+tilike
+SELECT * FROM segments_tester.queries_misspelled WHERE LCASE(solution) LIKE LCASE("%tilike%")
+ilik
