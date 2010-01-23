@@ -17,7 +17,8 @@ class Tester
 		@dm = DMSoundex.new(query)
 		@dm_candidates = @dm.find
 		
-		@seg_candidates = Segments.find(query)
+    @seg = Segments.new
+		@seg_candidates = @seg.find(query)
 		# ...
 	end	
 end

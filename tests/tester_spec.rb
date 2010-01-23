@@ -31,11 +31,11 @@ describe Tester do
 		dm_candidates["solution2"].should == 1
 		
 		# Segments checking
-		seg_candidates = @t.seg_candidates
-		seg_candidates.class.should == Hash
-		seg_candidates["solution0"].should == 30
-		seg_candidates["solution1"].should == 10
-		seg_candidates["solution2"].should == 10
+#		seg_candidates = @t.seg_candidates
+#		seg_candidates.class.should == Hash
+#		seg_candidates["solution0"].should == 30
+#		seg_candidates["solution1"].should == 10
+#		seg_candidates["solution2"].should == 10
 	end
 	
 end

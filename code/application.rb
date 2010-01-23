@@ -19,5 +19,28 @@ class Application
 		end
 		@hash
 	end
+
+  class Log
+    # Logs a msg to the application log
+    def self.app(msg)
+      f = File.open('logs/application.log', 'a')
+      f.puts msg
+      f.close
+    end
+
+    # Log a msg to the segments log
+    def self.seg(msg)
+      f = File.open('logs/segments.log', 'a')
+      f.puts msg
+      f.close
+    end
+
+    # Deletes all logs
+    def self.clear
+      Dir.glob('logs/*.log').each do |e| 
+        File.delete(e)
+      end
+    end
+  end
 	
 end

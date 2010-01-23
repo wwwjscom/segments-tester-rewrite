@@ -11,6 +11,7 @@ class Main < Application
 	attr_reader :config
 	
 	def initialize
+    Log.clear
     begin
       File.delete('tmp/segments_log.txt')
     rescue
@@ -33,10 +34,13 @@ class Main < Application
 			solution 	= attrs["solution"]
 			misspelled 	= attrs["misspelled"]
 						
+      Log.seg "Misspelled: #{misspelled}"
+      Log.seg "Solution: #{solution}"
+
 			@t = Tester.new
 			@t.find(misspelled)
 			
-      puts "Solution: #{solution}"
+#      puts "Solution: #{solution}"
 			@eval_3grams 	= Evaluator.new(@t.grams_3_candidates, solution)
 			@eval_4grams 	= Evaluator.new(@t.grams_4_candidates, solution)
 			@eval_dm 		= Evaluator.new(@t.dm_candidates, solution)
@@ -44,9 +48,9 @@ class Main < Application
 			
 			# Segments failed to meet the threshold, and is lower than 3grams,
 			# so use the 3grams results for segments.
-		#	if Evaluator.compare_confidence(@eval_seg, @eval_3grams) == "e2"
-		#		@eval_seg = @eval_3grams
-		#	end
+			if Evaluator.compare_confidence(@eval_seg, @eval_3grams) == "e2"
+				@eval_seg = @eval_3grams
+			end
 		
 			# Add to the stats instance variables
 			@s_3grams.add(@eval_3grams)
@@ -56,6 +60,10 @@ class Main < Application
 			
 			#debug(misspelled)			
 			
+      # Log some information
+      Log.seg "Found? #{@eval_seg.found?}"
+      Log.seg "Rank: #{@eval_seg.rank}" if @eval_seg.found?
+      Log.seg "Candidates: #{@t.seg_candidates}"
 			# ...
 		end
 		
