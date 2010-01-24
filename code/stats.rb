@@ -1,6 +1,8 @@
 require "code/evaluator"
 
-class Stats
+class Stats < Application
+	
+	attr :founds
 	
 	# Pass in the engine's name
 	def initialize(name)
@@ -10,14 +12,17 @@ class Stats
 		@found_percent 	= 0.0
 		@average_rank	= 0.0
 		@average_rank_a	= []
+		@founds			= {} # Key of the solution, value of its rank.
 	end
 	
 	def add(eval)
 		@total_searches += 1
 		found = eval.found?
 		if found
+			rank = eval.rank
+			@founds[eval.solution] = rank
 			@total_found += 1
-			@average_rank_a << eval.rank
+			@average_rank_a << rank
 		end
 	end
 	
@@ -40,7 +45,22 @@ class Stats
 	end
 
 	def to_s
-		"#{@name} found #{@total_found}/#{@total_searches}: #{@found_percent}% with an average rank of #{@average_rank}"
+		s = "#{@name} found #{@total_found}/#{@total_searches}: #{@found_percent}% with an average rank of #{@average_rank}"
+		s += " and a common rank of #{@common_rank}" if @name =~ /segment/i
+		s
 	end
 	
+	def common_rank(stats_3grams)
+		@common_rank = 0.0
+		stats_3grams.founds.each_key do |key|
+#			puts "key: #{key}"
+#			puts "founds[key]: #{@founds[key]}"
+			begin
+				@common_rank += @founds[key]
+			rescue
+				Log.app "NOTICE:  3grams found one segments did not find!  Solution: #{key}"
+			end
+		end
+		@common_rank = @common_rank/@founds.size
+	end
 end

@@ -39,46 +39,34 @@ class Segments < Application
     candidates = merge_candidates(candidates, cans_7)
 	end
 	
-#	def self.find(query)
-#		@candidates = {}
-#		`php lib/segments/searchresults.php "#{query}"`
-#		file = File.open('tmp/our_results.txt')
-#		while line = file.gets do
-#			line.chomp!
-#			votes = line.split(', ')[0].to_i
-#			condidate = line.split(', ')[1]
-#			@candidates[condidate] = votes
-#		end
-#    p @candidates if ENV['DEBUG'] == 'true'
-#		@candidates
-#	end
-	
 	
 #	private # ----------------
 	
-  def merge_candidates(hsh1, hsh2)
-    hsh1.merge(hsh2) { |key, oldval, newval| key = oldval + newval }
-  end
+	def merge_candidates(hsh1, hsh2)
+		hsh1.merge(hsh2) { |key, oldval, newval| key = oldval + newval }
+	end
 	
 	def find_candidates(segments)
-		@sql = SQL.new
-    @candidates = {}
-		segments.each do |seg|
-      query = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
-			results = @sql.query(query)
-      Log.seg(query)
+		weight = 1.0
+        @sql = SQL.new
+        @candidates = {}
+        segments.each do |seg|
+	        query = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
+	        results = @sql.query(query)
+	        Log.seg(query)
 
-			#p results.fetch_hash
-      while row = results.fetch_hash
-        solution = row["solution"]
-        if @candidates.has_key?(solution)
-          @candidates[solution] += 1
-        else
-          @candidates[solution] = 1
-        end # if
-      end # while
+            #p results.fetch_hash
+			while row = results.fetch_hash
+		        solution = row["solution"]
+		        if @candidates.has_key?(solution)
+					@candidates[solution] += 1.0*weight
+				else
+					@candidates[solution] = 1.0*weight
+				end # if
+			end # while
+			weight = weight # Rought estimate show that using weights doesn't imrpove rank...go figure.
 		end # each
-    @candidates
+	@candidates
 	end
 	
    

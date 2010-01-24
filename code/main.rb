@@ -34,8 +34,8 @@ class Main < Application
 			solution 	= attrs["solution"]
 			misspelled 	= attrs["misspelled"]
 						
-      Log.seg "Misspelled: #{misspelled}"
-      Log.seg "Solution: #{solution}"
+			Log.seg "Misspelled: #{misspelled}"
+			Log.seg "Solution: #{solution}"
 
 			@t = Tester.new
 			@t.find(misspelled)
@@ -60,10 +60,10 @@ class Main < Application
 			
 			#debug(misspelled)			
 			
-      # Log some information
-      Log.seg "Found? #{@eval_seg.found?}"
-      Log.seg "Rank: #{@eval_seg.rank}" if @eval_seg.found?
-      Log.seg "Candidates: #{@t.seg_candidates}"
+			# Log some information
+			Log.seg "Found? #{@eval_seg.found?}"
+			Log.seg "Rank: #{@eval_seg.rank}" if @eval_seg.found?
+			Log.seg "Candidates: #{@t.seg_candidates}"
 			# ...
 		end
 		
@@ -72,7 +72,9 @@ class Main < Application
 		@s_4grams.calculate
 		@s_dm.calculate
 		@s_seg.calculate
-		
+
+		@s_seg.common_rank(@s_3grams)
+				
 		# Display the results
 		puts @s_3grams.to_s
 		puts @s_4grams.to_s
