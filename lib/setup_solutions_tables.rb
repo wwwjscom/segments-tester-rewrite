@@ -40,8 +40,8 @@ class SetupSolutionsTables < Application
 	# Inserts a set of data into the correct table
 	def insert(type, type_attr, solution)
 		sql = SQL.new
-		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
-		sql.query "INSERT INTO #{@config['queries_table']}#{type} VALUES ('#{type_attr}', '#{solution}')"
+		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL AUTO_INCREMENT, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL, PRIMARY KEY (id))"
+		sql.query "INSERT INTO #{@config['queries_table']}#{type} (`#{type.gsub('_', '')}`, `solution`) VALUES (LCASE('#{type_attr}'), LCASE('#{solution}'))"
 	end
 	
 	# Parses the line and returns a hash of its contents
