@@ -5,22 +5,23 @@ describe Evaluator do
 	
 	before(:all) do
 		candidates_hash = {"solution0"=>20, "solution1"=>10, "solution2"=>10}
-		solution = 'solution0'
-		@e = Evaluator.new(candidates_hash, solution)
+		solution        = 'solution0'
+		solution_id     = 1
+		@e = Evaluator.new(candidates_hash, solution, solution_id)
 		
 		# Setup an example to utalize true rank (notice the tie amoung votes...)
 		candidates_hash = {"solution2"=>10, "solution0"=>10, "solution1"=>10}
-		@e2 = Evaluator.new(candidates_hash, solution)
+		@e2 = Evaluator.new(candidates_hash, solution, solution_id)
 
 		candidates_hash = {"solution2"=>10, "solution0"=>5, "solution1"=>10}
-		@e3 = Evaluator.new(candidates_hash, "solution0")
+		@e3 = Evaluator.new(candidates_hash, "solution0", solution_id)
 		
 		candidates_hash = {"solution2"=>10, "solution0"=>5, "solution1"=>8}
-		@e4 = Evaluator.new(candidates_hash, "solution1")
+		@e4 = Evaluator.new(candidates_hash, "solution1", solution_id)
 		
 		# Setup an example where solution isn't found
 		candidates_hash = {"solution1"=>10, "solution2"=>10}		
-		@e_bad = Evaluator.new(candidates_hash, solution)
+		@e_bad = Evaluator.new(candidates_hash, solution, solution_id)
 	end
 	
 	it 'should mark found solutions' do
@@ -50,4 +51,5 @@ describe Evaluator do
 		Evaluator.compare_confidence(@e2, @e3).should == "e1"
 		Evaluator.compare_confidence(@e3, @e4).should == "e2"
 	end
+
 end

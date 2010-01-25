@@ -1,9 +1,11 @@
 require 'code/sql'
 require "code/configs"
+require "code/application"
 
 describe SQL do
 	
 	before(:all) do
+		@app = Application.new
 		@config = Configs.read_yml
 		@db = SQL.new(@config["db_user"], @config["db_pass"], @config["db_test_db"], true)
 	end
@@ -42,14 +44,14 @@ describe SQL do
   end
 
   it 'should query correctly with 1 result' do
-    result = @db.query 'select * from segments_tester.query_logs_correct ORDER BY query LIMIT 1;'
-    result.fetch_row[0].should == "banka"
+    result = @db.query "select * from #{@app.get_db}.#{@config['queries_table']}_misspelled ORDER BY misspelled LIMIT 1;"
+    result.fetch_row[1].should == "solutio0"
   end
 
   it 'should query correctly with >1 result' do
-    results = @db.query 'select * from segments_tester.query_logs_correct ORDER BY query LIMIT 2;'
-    results.fetch_row[0].should == "banka"
-    results.fetch_row[0].should == "batovce"
+    result = @db.query "select * from #{@app.get_db}.#{@config['queries_table']}_misspelled ORDER BY misspelled LIMIT 2;"
+    result.fetch_row[1].should == "solutio0"
+    result.fetch_row[1].should == "solutio1"
   end
 
   it 'should query correctly with an empty string' do

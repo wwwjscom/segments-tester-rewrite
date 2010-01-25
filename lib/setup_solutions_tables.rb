@@ -16,7 +16,7 @@ class SetupSolutionsTables < Application
 	def read_file
 		@lines_index = 0
 		@lines = []
-		file = (@config['SEG_ENV'] =~ /test/i) ? 'db/solutions_rspec.csv' : 'db/solutions.csv'
+		file = (SEG_ENV =~ /test/i) ? 'db/solutions_rspec.csv' : 'db/solutions.csv'
 		file = File.open(file)
 		while line = file.gets do
 			@lines << line

@@ -7,13 +7,14 @@ describe Stats do
 		@s = Stats.new("test engine")
 		
 		solution	= 'solution2'
+		solution_id = 0
 		
 		candidates 	= {"solution0"=>10, "solution1"=>10, "solution2"=>20}
-		e1 = Evaluator.new(candidates, solution)
+		e1 = Evaluator.new(candidates, solution, solution_id)
 		candidates 	= {"solution0"=>10, "solution1"=>10}
-		e2 = Evaluator.new(candidates, solution)
+		e2 = Evaluator.new(candidates, solution, solution_id)
 		candidates 	= {"solution0"=>10, "solution1"=>10}
-		e3 = Evaluator.new(candidates, solution)
+		e3 = Evaluator.new(candidates, solution, solution_id)
 		
 		
 		@s.add(e1)

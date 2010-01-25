@@ -5,9 +5,10 @@ class Evaluator < Application
 	attr_accessor :solution
 
 	# Initializes with an engines candidates hash, and the solution
-	def initialize(candidates_hash, solution)
+	def initialize(candidates_hash, solution, solution_id)
 		@candidates_hash = candidates_hash
 		@solution = solution
+		@solution_id = solution_id
 	end
 	
 	# Returns whether the solution was found in the candidates

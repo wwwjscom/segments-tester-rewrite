@@ -7,12 +7,11 @@ describe Segments do
 	end
 	
 	it 'should find' do
-		pending('Broken by segments rewrite')
-		results = Segments.find('solution0')
+		results = @seg.find('solution0')
 		results.class.should == Hash
-		results['solution0'].should == 30
-		results['solution1'].should == 10
-		results['solution2'].should == 10
+		results['solution0'].should == 16.0
+		results['solution1'].should == 7.0
+		results['solution2'].should == 7.0
 	end
 	
 	it 'should method 1' do
