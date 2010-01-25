@@ -4,23 +4,26 @@ class Evaluator < Application
 
 	attr_accessor :solution
 
-	# Initializes with an engines candidates hash, and the solution
-	def initialize(candidates_hash, solution, solution_id)
-		@candidates_hash = candidates_hash
-		@solution = solution
+	# Initializes with an engines candidates, and the solution info
+	def initialize(candidates, solution, solution_id)
+		@candidates  = candidates
+		@solution    = solution
 		@solution_id = solution_id
 	end
 	
 	# Returns whether the solution was found in the candidates
 	def found?
-		@candidates_hash.key?(@solution)
+		@candidates.has_solution?(@solution)
 	end
 	
 	# Returns the solutions rank within the candidates, if found
 	def rank		
-		sorted = @candidates_hash.sort{ |x,y| y[1] <=> x[1] }
-		rank = sorted.flatten.index(@solution)
+		sorted = @candidates.sort_by_rank
+		sorted = sorted.collect { |c| [c.solution, c.votes] }
+		rank   = sorted.flatten.index(@solution)
+
 		if rank == nil then return end
+
 		# Now find the true rank.  That is, if there is a tie amoung the
 		# number of votes, select the index of the first candidate with
 		# that many votes, instead of arbitrarly selecting its rank.
@@ -33,9 +36,8 @@ class Evaluator < Application
 	# Returns the confidence
 	def confidence
 		rank
-		@total_votes = 0
-		@candidates_hash.to_a.flatten.each { |x| @total_votes += x.to_i }
-		("%.2f" % (@solution_votes.to_f/@total_votes.to_f)).to_f
+		total_votes = @candidates.total_votes
+		("%.2f" % (@solution_votes.to_f/total_votes.to_f)).to_f
 	end
 	
 	# Give two evaluator instances, do the following:

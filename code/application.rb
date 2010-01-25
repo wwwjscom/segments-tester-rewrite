@@ -12,10 +12,11 @@ class Application
 
 
 	# Takes in the matches and returns a hash of candidates and votes
+	# Should be depreated...but see comment below
 	def organize_votes(matches)
 		@hash = {}
 		matches.flatten!
-		keys = matches.uniq
+		keys = matches.uniq # uniq?? Shouldn't we consider multiple matches as more votes...
 		keys.each do |key|
 			@hash[key.chomp] = matches.count(key)
 		end

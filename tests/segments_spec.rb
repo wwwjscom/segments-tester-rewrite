@@ -8,10 +8,11 @@ describe Segments do
 	
 	it 'should find' do
 		results = @seg.find('solution0')
-		results.class.should == Hash
-		results['solution0'].should == 16.0
-		results['solution1'].should == 7.0
-		results['solution2'].should == 7.0
+		results.class.should == Candidates
+		results.find_by_solution('solution0').class.should == Candidate
+		results.find_by_solution('solution0').votes.should == 15.0
+		results.find_by_solution('solution1').votes.should == 6.0
+		results.find_by_solution('solution2').votes.should == 6.0
 	end
 	
 	it 'should method 1' do
@@ -54,11 +55,4 @@ describe Segments do
 		segments[0].should == 'Sl%ia'
 	end
 
-  it 'should merge candidates' do
-    segments = @seg.method_1('solution0')
-    candidates = @seg.find_candidates(segments)
-    candidates["solution0"].should == 4
-    merged = @seg.merge_candidates(candidates, candidates)
-    merged["solution0"].should == 8
-  end
 end

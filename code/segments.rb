@@ -1,72 +1,66 @@
 require "code/sql"
+require "code/candidates"
 
 class Segments < Application
 
+	def initialize
+		@candidates = Candidates.new
+	end
+
 	def find(query)
-		candidates = {}
+		@misspelled = query
 
 		Log.seg("Method 1")
-		segs       = method_1(query)
-		cans_1     = find_candidates(segs)
+		segs = method_1(query)
+		find_candidates(segs)
+		
 		Log.seg("Method 3")
-		segs       = method_3(query)
-		cans_3     = find_candidates(segs)
-
-		candidates = merge_candidates(cans_1, cans_3)
+		segs = method_3(query)
+		find_candidates(segs)
 
 		Log.seg("Method 4")
-		segs       = method_4(query)
-		cans_4     = find_candidates(segs)
-
-		candidates = merge_candidates(candidates, cans_4)
+		segs = method_4(query)
+		find_candidates(segs)
 
 		Log.seg("Method 5")
-		segs       = method_5(query)
-		cans_5     = find_candidates(segs)
-
-		candidates = merge_candidates(candidates, cans_5)
+		segs = method_5(query)
+		find_candidates(segs)
 
 		Log.seg("Method 6")
-		segs       = method_6(query)
-		cans_6     = find_candidates(segs)
-
-		candidates = merge_candidates(candidates, cans_6)
+		segs = method_6(query)
+		find_candidates(segs)
 
 		Log.seg("Method 7")
-		segs       = method_7(query)
-		cans_7     = find_candidates(segs)
+		segs = method_7(query)
+		find_candidates(segs)
 
-		candidates = merge_candidates(candidates, cans_7)
+		@candidates
 	end
 
 
 	#	private # ----------------
 
-	def merge_candidates(hsh1, hsh2)
-		hsh1.merge(hsh2) { |key, oldval, newval| key = oldval + newval }
-	end
-
 	def find_candidates(segments)
 		weight = 1.0
 		@sql = SQL.new
-		@candidates = {}
 		segments.each do |seg|
-			query = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
+			query   = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
 			results = @sql.query(query)
+
 			Log.seg(query)
 
-			#p results.fetch_hash
 			while row = results.fetch_hash
-				solution    = row["solution"]
-				if @candidates.has_key?(solution)
-					@candidates[solution] += 1.0*weight
+				solution = row["solution"]
+				id       = row['id']
+				if @candidates.has_id?(id)
+					@candidates.vote_for(id, 1.0*weight)
 				else
-					@candidates[solution] = 1.0*weight
+					c = Candidate.new(@misspelled, solution, id)
+					@candidates.add(c)
 				end # if
 			end # while
 			weight = weight # Rought estimate show that using weights doesn't imrpove rank...go figure.
 		end # each
-		@candidates
 	end
 
 
