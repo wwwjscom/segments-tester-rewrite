@@ -13,7 +13,8 @@ class Evaluator < Application
 	
 	# Returns whether the solution was found in the candidates
 	def found?
-		@candidates.has_solution?(@solution)
+		@candidates.has_id?(@solution_id)
+#		@candidates.has_solution?(@solution)
 	end
 	
 	# Returns the solutions rank within the candidates, if found

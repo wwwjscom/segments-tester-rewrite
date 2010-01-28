@@ -9,6 +9,11 @@ class Ngram < Application
 
 	# Generates the ngrams from the query and stores them for later access
 	def initialize(n, query)
+		p 'new'
+		p n
+		p query
+		@candidates = Candidates.new
+		@misspelled = query
 		@query = query
 		@grams = [] # Array containing all of the grams generated
 		@n = n
@@ -26,26 +31,31 @@ class Ngram < Application
 	def find
 		@config = Configs.read_yml
 		@sql = SQL.new
-		@candidates = Candidates.new
 		@grams.each do |gram|
-			results = @sql.query "SELECT * FROM #{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
+			results = @sql.query "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
 			if results.class == Array
-				id         = results["id"]
-				solution   = results["solution"]
-				misspelled = results["misspelled"]
-
-				@candidates.add Candidate.new(misspelled, solution, id)
+				add(results.fetch_hash)
 			else
-				while r = results.fetch_row do
-					p r
-					id         = r["id"]
-					solution   = r["solution"]
-					misspelled = r["misspelled"]
-
-					@candidates.add Candidate.new(misspelled, solution, id)
+				while r = results.fetch_hash do
+					add(r)
 				end
 			end
 		end
+		p "Candidates: #{@candidates.candidates.collect(&:solution)}"
+		@candidates
+	end
+	
+	def add(row)
+		solution   = row["solution"]
+		id         = row['id']
+		misspelled = @misspelled
+
+		if @candidates.has_id?(id)
+			@candidates.vote_for(id, 1.0)
+		else
+			c = Candidate.new(misspelled, solution, id)
+			@candidates.add(c)
+		end # if
 	end
 
 end

@@ -43,10 +43,10 @@ describe Ngram do
 	
 	it 'should find with >1 matching 3gram' do
 		matches = @search_3grams.find
-		matches.class.should == Hash
-		matches['solution0'].should == 8
-		matches['solution1'].should == 6
-		matches['solution2'].should == 6
+		matches.class.should == Candidates
+		matches.find_by_solution('solution0').votes.should == 7.0
+		matches.find_by_solution('solution1').votes.should == 5.0
+		matches.find_by_solution('solution2').votes.should == 5.0
 	end 
 	
 end

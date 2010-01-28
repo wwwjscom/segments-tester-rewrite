@@ -1,5 +1,5 @@
 class Candidates
-		
+attr_accessor :candidates		
 	def initialize
 		@candidates = [] # An array of candidate objects
 	end
@@ -29,7 +29,11 @@ class Candidates
 	# Returns the hash of the candidate that has a solution
 	# matching the given param
 	def find_by_solution(solution)
-		@candidates[@candidates.collect(&:solution).index(solution)]
+		begin
+			@candidates[@candidates.collect(&:solution).index(solution)]
+		rescue
+			false
+		end
 	end
 	
 	# Returns an array of candidates, sorted by their rank
@@ -40,6 +44,21 @@ class Candidates
 	# Returns the total number of votes
 	def total_votes
 		@candidates.inject(0) { |sum, c| sum + c.votes }
+	end
+	
+	# Returns the number of candidates
+	def size
+		@candidates.size
+	end
+	
+	# Pretty prints the array of candidates
+	def to_s
+		s = ''
+		unless @candidates == nil
+			@candidates.each do |c|
+				s += "[#{c.id}, #{c.misspelled}, #{c.solution}, #{c.votes}], "
+			end
+		end
 	end
 end
 

@@ -55,12 +55,12 @@ class Main < Application
 			@s_dm.add(@eval_dm)
 			@s_seg.add(@eval_seg)
 
-			#debug(misspelled)			
+			debug(misspelled)
 
 			# Log some information
 			Log.seg "Found? #{@eval_seg.found?}"
 			Log.seg "Rank: #{@eval_seg.rank}" if @eval_seg.found?
-			Log.seg "Candidates: #{@t.seg_candidates}"
+			Log.seg "Candidates: #{@t.seg_candidates.to_s}"
 			# ...
 		end
 

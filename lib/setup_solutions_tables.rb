@@ -38,10 +38,13 @@ class SetupSolutionsTables < Application
 	end
 	
 	# Inserts a set of data into the correct table
-	def insert(type, type_attr, solution)
+	# We don't use auto-incrementing id's because it'll cause a problem
+	# with ngrams...therefore the id column MAY NOT BE UNIQUE, but will
+	# always map to a unique misspelled/solution pair.
+	def insert(type, type_attr, solution, id)
 		sql = SQL.new
-		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL AUTO_INCREMENT, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL, PRIMARY KEY (id))"
-		sql.query "INSERT INTO #{@config['queries_table']}#{type} (`#{type.gsub('_', '')}`, `solution`) VALUES (LCASE('#{type_attr}'), LCASE('#{solution}'))"
+		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+		sql.query "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
 	end
 	
 	# Parses the line and returns a hash of its contents
@@ -51,9 +54,11 @@ class SetupSolutionsTables < Application
 	
 	
 	def setup_queries_table
+		id = 1
 		@lines.each do |line|
 			line = parse(line)
-			insert('_misspelled', line[:misspelled], line[:solution])
+			insert('_misspelled', line[:misspelled], line[:solution], id)
+			id += 1
 		end
 	end
 	
@@ -70,9 +75,11 @@ class SetupSolutionsTables < Application
 	end
 	
 	def insert_dm_soundex_encodings
+		id = 1
 		@dm_soundex_objs.each do |obj|
 			encoding = obj.encoding
-			insert('_dm_soundex', encoding, obj.query)
+			insert('_dm_soundex', encoding, obj.query, id)
+			id += 1
 		end
 	end
 	
@@ -90,11 +97,13 @@ class SetupSolutionsTables < Application
 	
 	# Loops over the gram objects and calls insert on each
 	def insert_ngrams(n)
+		id = 1
 		type = (n == 3) ? "_3grams" : "_4grams"
 		@ngram_objs.each do |obj|
 			obj.grams.each do |gram|
-				insert(type, gram, obj.query)
+				insert(type, gram, obj.query, id)
 			end
+			id += 1
 		end
 	end
 end

@@ -11,24 +11,24 @@ describe Tester do
 		
 		# 3 grams checking
 		grams_3_candidates = @t.grams_3_candidates
-		grams_3_candidates.class.should == Hash
-		grams_3_candidates["solution0"].should == 8
-		grams_3_candidates["solution1"].should == 6
-		grams_3_candidates["solution2"].should == 6
+		grams_3_candidates.class.should == Candidates
+		grams_3_candidates.find_by_solution("solution0").votes.should == 7.0
+		grams_3_candidates.find_by_solution("solution1").votes.should == 5.0
+		grams_3_candidates.find_by_solution("solution2").votes.should == 5.0
 		
 		# 4 grams checking
 		grams_4_candidates = @t.grams_4_candidates
-		grams_4_candidates.class.should == Hash
-		grams_4_candidates["solution0"].should == 8
-		grams_4_candidates["solution1"].should == 5
-		grams_4_candidates["solution2"].should == 5
+		grams_4_candidates.class.should == Candidates
+		grams_4_candidates.find_by_solution("solution0").votes.should == 7.0
+		grams_4_candidates.find_by_solution("solution1").votes.should == 4.0
+		grams_4_candidates.find_by_solution("solution2").votes.should == 4.0
 
 		# DM Soundex checking
 		dm_candidates = @t.dm_candidates
-		dm_candidates.class.should == Hash
-		dm_candidates["solution0"].should == 1
-		dm_candidates["solution1"].should == 1
-		dm_candidates["solution2"].should == 1
+		dm_candidates.class.should == Candidates
+		dm_candidates.find_by_solution("solution0").votes.should == 2.0
+		dm_candidates.find_by_solution("solution1").should == false
+		dm_candidates.find_by_solution("solution2").should == false
 		
 		# Segments checking
 #		seg_candidates = @t.seg_candidates
