@@ -9,9 +9,6 @@ class Ngram < Application
 
 	# Generates the ngrams from the query and stores them for later access
 	def initialize(n, query)
-		p 'new'
-		p n
-		p query
 		@candidates = Candidates.new
 		@misspelled = query
 		@query = query
@@ -41,7 +38,6 @@ class Ngram < Application
 				end
 			end
 		end
-		p "Candidates: #{@candidates.candidates.collect(&:solution)}"
 		@candidates
 	end
 	

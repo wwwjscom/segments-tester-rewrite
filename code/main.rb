@@ -55,7 +55,7 @@ class Main < Application
 			@s_dm.add(@eval_dm)
 			@s_seg.add(@eval_seg)
 
-			debug(misspelled)
+			#debug(misspelled)
 
 			# Log some information
 			Log.seg "Found? #{@eval_seg.found?}"
