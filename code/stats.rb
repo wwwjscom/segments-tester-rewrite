@@ -35,7 +35,11 @@ class Stats < Application
 	def average_rank
 		@rank = 0.0
 		@average_rank_a.each do |r|
-			@rank += r
+			begin
+				@rank += r
+			rescue
+				p "rank is nil..."
+			end
 		end
 		@average_rank = ("%.2f" % (@rank.to_f/@total_found.to_f)).to_f
 	end

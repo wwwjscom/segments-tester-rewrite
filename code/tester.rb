@@ -1,10 +1,12 @@
+require "code/application"
 require "code/ngram"
 require "code/segments"
 require "code/dm_soundex"
+require "code/edit_distance"
 
-class Tester
+class Tester < Application
 	
-	attr_accessor :grams_3_candidates, :grams_4_candidates, :dm_candidates, :seg_candidates
+	attr_accessor :grams_3_candidates, :grams_4_candidates, :dm_candidates, :seg_candidates, :ed_candidates
 	
 	# Queries all of our engines for the given query
 	def find(query)
@@ -31,27 +33,12 @@ class Tester
 			@seg_candidates = @seg.find(query)
 		}
 		
+		threads[4] = Thread.new {			
+			@ed = EditDistance.new(query)
+			distances = @ed.match(@ed.all_solutions)
+			@ed_candidates = @ed.combine(distances) # Combine candidates & their edit distances
+		}
+		
 		threads.each { |aThread| aThread.join }
-		# ...
 	end	
 end
-
-
-#pages = %w( www.rubycentral.com
-#            www.awl.com
-#            www.pragmaticprogrammer.com
-#           )
-#
-#threads = []
-#
-#for page in pages
-#  threads << Thread.new(page) { |myPage|
-#
-#    h = Net::HTTP.new(myPage, 80)
-#    puts "Fetching: #{myPage}"
-#    resp, data = h.get('/', nil )
-#    puts "Got #{myPage}:  #{resp.message}"
-#  }
-#end
-#
-#threads.each { |aThread|  aThread.join }

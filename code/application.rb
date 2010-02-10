@@ -3,7 +3,7 @@ require "code/configs"
 class Application
 
 	SEG_ENV = Configs.read_yml['SEG_ENV']
-
+	
 	# Returns the db to be used based on our enviornment
 	def get_db
 		@config = Configs.read_yml
@@ -34,6 +34,12 @@ class Application
 		# Log a msg to the segments log
 		def self.seg(msg)
 			f = File.open('logs/segments.log', 'a')
+			f.puts msg
+			f.close
+		end
+		
+		def self.ed(msg)
+			f = File.open('logs/edit_distance.log', 'a')
 			f.puts msg
 			f.close
 		end

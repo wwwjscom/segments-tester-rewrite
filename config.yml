@@ -13,6 +13,10 @@ queries_table: queries
 # If segments is below this threashold, we'll consider using the 3grams results
 confidence_threashold: 0.2
 
+# If a candidates edit distance is >= to this, it will be removed from ten candidates list
+# i.e. it will be disreguarded if its value is too high.
+edit_distance_prune_at: 5
+
 
 # This is just using by rspec testing
 # to verify the yaml is all good

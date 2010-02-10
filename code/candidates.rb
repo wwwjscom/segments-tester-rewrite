@@ -1,11 +1,18 @@
 class Candidates
-attr_accessor :candidates		
+	
+	attr_accessor :candidates		
+	
 	def initialize
 		@candidates = [] # An array of candidate objects
 	end
 	
 	def add(candidate)
 		@candidates << candidate
+	end
+	
+	# Removes the candidate at the specified index
+	def remove(index)
+		@candidates.delete_at(index)
 	end
 	
 	# Returns whether or not the array contains a candidate with this

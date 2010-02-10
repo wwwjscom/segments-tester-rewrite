@@ -18,6 +18,7 @@ class Main < Application
 		@s_4grams = Stats.new('4grams')
 		@s_dm     = Stats.new('DM Soundex')
 		@s_seg    = Stats.new('Segments')
+		@s_ed	  = Stats.new('Edit Distance')
 
 		# Declare stats instance variables here, since we'll be adding
 		# to them over the life of the program
@@ -42,11 +43,13 @@ class Main < Application
 			@eval_4grams = Evaluator.new(@t.grams_4_candidates, solution, solution_id)
 			@eval_dm     = Evaluator.new(@t.dm_candidates, solution, solution_id)
 			@eval_seg    = Evaluator.new(@t.seg_candidates, solution, solution_id)
+			@eval_ed 	 = Evaluator.new(@t.ed_candidates, solution, solution_id)
 
 			# Segments failed to meet the threshold, and is lower than 3grams,
 			# so use the 3grams results for segments.
 			if Evaluator.compare_confidence(@eval_seg, @eval_3grams) == "e2"
 				@eval_seg = @eval_3grams
+				Log.app 'Changing...'
 			end
 
 			# Add to the stats instance variables
@@ -54,6 +57,7 @@ class Main < Application
 			@s_4grams.add(@eval_4grams)
 			@s_dm.add(@eval_dm)
 			@s_seg.add(@eval_seg)
+			@s_ed.add(@eval_ed)
 
 			#debug(misspelled)
 
@@ -69,6 +73,7 @@ class Main < Application
 		@s_4grams.calculate
 		@s_dm.calculate
 		@s_seg.calculate
+		@s_ed.calculate
 
 		@s_seg.common_rank(@s_3grams)
 
@@ -78,6 +83,7 @@ class Main < Application
 			puts @s_4grams.to_s
 			puts @s_dm.to_s
 			puts @s_seg.to_s
+			puts @s_ed.to_s
 		end
 
 	end

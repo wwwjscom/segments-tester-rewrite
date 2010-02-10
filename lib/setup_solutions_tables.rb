@@ -70,7 +70,7 @@ class SetupSolutionsTables < Application
 		@dm_soundex_objs = []
 		@lines.each do |line|
 			query = parse(line)[:solution]
-      p query
+      		#p query
 			@dm_soundex_objs << DMSoundex.new(query)
 		end
 	end

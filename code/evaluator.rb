@@ -30,7 +30,16 @@ class Evaluator < Application
 		@solution_votes = sorted.flatten[rank+1]
 		true_rank = sorted.flatten.index(@solution_votes)
 		
-		(true_rank > 1) ? (true_rank/2)+1 : true_rank
+		rank = (true_rank > 1) ? (true_rank/2)+1 : true_rank
+		
+#		Log.app("Rank::Solution: #{@solution}")
+#		Log.app("Rank::Solution_id: #{@solution_id}")
+#		Log.app("Rank::found?: #{found?}")
+#		Log.app("Rank::sorted: #{sorted}")
+#		Log.app("Rank::rank: #{rank}")
+#		Log.app("-"*50)
+		
+		return rank
 	end
 	
 	# Returns the confidence
@@ -47,8 +56,9 @@ class Evaluator < Application
 		@config = Configs.read_yml
 		Log.app "e1 confidence: #{e1.confidence}.  e2 confidence #{e2.confidence}"
 		if e1.confidence <= @config["confidence_threashold"].to_f
-			Log.app 'Recomend changing to ngram results'
+			Log.app "Segments confidence below threadhold, considering a change..."
 			ret =  (e1.confidence < e2.confidence) ? "e2" : "e1"
+			Log.app 'Recomend changing to ngram results' if ret == "e2"
 		else
 			ret = "e1"
 		end

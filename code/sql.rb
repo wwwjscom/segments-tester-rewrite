@@ -14,10 +14,10 @@ class SQL < Application
 
 	# Initializes the queries array so we can call
 	# functions like has_next? and others.
-	def populate(config)
+	def populate(config = nil)
 		@queries_index = 0 # tracks our location within the queries array
 		@queries = []
-		results = query("SELECT * FROM #{config['queries_table']}_misspelled;")
+		results = query("SELECT * FROM #{@config['queries_table']}_misspelled;")
 		while r = results.fetch_hash
 			@queries << r
 		end
