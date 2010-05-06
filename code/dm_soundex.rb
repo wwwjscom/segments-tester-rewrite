@@ -47,7 +47,7 @@ class DMSoundex < Application
 		if @candidates.has_id?(id)
 			@candidates.vote_for(id, 1.0)
 		else
-			c = Candidate.new(misspelled, solution, id)
+			c = Candidate.new(misspelled, solution, id, 1.0)
 			@candidates.add(c)
 		end # if
 	end
