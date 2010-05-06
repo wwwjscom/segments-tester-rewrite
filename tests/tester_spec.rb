@@ -26,10 +26,8 @@ describe Tester do
 		# DM Soundex checking
 		dm_candidates = @t.dm_candidates
 		dm_candidates.class.should == Candidates
-		dm_candidates.find_by_solution("solution0").votes.should == 2.0
-		dm_candidates.find_by_solution("solution1").should == false
-		dm_candidates.find_by_solution("solution2").should == false
-		
+		dm_candidates.size.should == 3
+		dm_candidates.find_by_solution("solution0").votes.should == 1.0		
 		# Segments checking
 #		seg_candidates = @t.seg_candidates
 #		seg_candidates.class.should == Hash
