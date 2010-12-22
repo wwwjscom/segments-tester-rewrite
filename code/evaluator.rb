@@ -29,7 +29,7 @@ class Evaluator < Application
 		# that many votes, instead of arbitrarly selecting its rank.
 		@solution_votes = sorted.flatten[rank+1]
 		true_rank = sorted.flatten.index(@solution_votes)
-		
+   	
 		rank = (true_rank > 1) ? (true_rank/2)+1 : true_rank
 		
 #		Log.app("Rank::Solution: #{@solution}")

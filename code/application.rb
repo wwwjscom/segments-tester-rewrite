@@ -24,6 +24,14 @@ class Application
 	end
 
 	class Log
+		
+		# Logs a msg to the status file
+		def self.stats(msg)
+			f = File.open('logs/stats.log', 'a')
+			f.puts msg
+			f.close			
+		end
+		
 		# Logs a msg to the application log
 		def self.app(msg)
 			f = File.open('logs/application.log', 'a')

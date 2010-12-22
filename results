@@ -1,0 +1,63 @@
+(in /Users/wwwjscom/Code/Segments Tester)
+** Invoke run:synthetic (first_time)
+** Execute run:synthetic
+16:01 -- in setup_queries
+16:01 -- leaving setup_queries
+-- drop_chrs 1 --
+16:01 -- Running - 1/9802
+16:01 -- Finding...
+16:01 -- Swap?
+16:01 -- Adding results
+16:01 -- Logging findings
+16:01 -- Running - 2/9802
+16:01 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 3/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 4/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 5/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 6/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 7/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 8/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 9/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 10/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 11/9802
+16:02 -- Finding...
+16:02 -- Swap?
+16:02 -- Adding results
+16:02 -- Logging findings
+16:02 -- Running - 12/9802
+16:02 -- Finding...

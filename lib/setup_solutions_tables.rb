@@ -16,9 +16,10 @@ class SetupSolutionsTables < Application
 	def read_file
 		@lines_index = 0
 		@lines = []
-		file = (SEG_ENV =~ /test/i) ? 'db/solutions_rspec.csv' : 'db/solutions.csv'
+		file = (SEG_ENV =~ /test/i) ? 'db/solutions_rspec.csv' : @config['input_file']
 		file = File.open(file)
 		while line = file.gets do
+			next if line.downcase.include?("j")
 			@lines << line
 		end
 	end
@@ -70,7 +71,8 @@ class SetupSolutionsTables < Application
 		@dm_soundex_objs = []
 		@lines.each do |line|
 			query = parse(line)[:solution]
-      		#p query
+			next if query.downcase.include?("j")
+#      		p query
 			@dm_soundex_objs << DMSoundex.new(query)
 		end
 	end

@@ -1,5 +1,6 @@
 require 'mysql'
 require "code/application"
+require "code/queries"
 
 class SQL < Application
 	
@@ -21,6 +22,18 @@ class SQL < Application
 		while r = results.fetch_hash
 			@queries << r
 		end
+	end
+	
+	def to_queries
+	  queries = Queries.new
+		while has_next?
+			attrs = self.next
+			solution_id = attrs["id"]
+			solution    = attrs["solution"]
+			misspelled  = attrs["misspelled"]
+			queries << Query.new(solution_id, solution, misspelled)
+		end
+		queries
 	end
 	
 	def has_next?

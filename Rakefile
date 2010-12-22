@@ -55,12 +55,44 @@ namespace "test" do
 #	end
 end
 
-desc "Setup and run the program"
-#task :default => [:tables] do
-task :default do
-	require "code/main"
-	m = Main.new
-	m.run
+namespace "run" do
+  desc "Setup and run the program"
+  #task :default => [:tables] do
+  task :default do
+  	require "code/main"
+  	m = Main.new
+  	m.search_type = :query_logs
+  	m.run
+  end
+
+  desc "Run the program using synthetic queries"
+  task :synthetic do
+  	require "code/main"
+  	
+  	FUNCTIONS = [["drop_chrs", 1], ["drop_chrs", 2], ["drop_chrs", 3], ["drop_chrs", 4],
+      ["add_chrs", 1], ["add_chrs", 2], ["add_chrs", 3], ["add_chrs", 4],
+      ["replace_chrs", 1], ["replace_chrs", 2], ["replace_chrs", 3], ["replace_chrs", 4],
+      ["swap_adj_chr", 1], ["swap_chrs", 2], ["swap_chrs", 3], ["swap_chrs", 4]]
+  	
+  	  if ENV["SYNTH_FUNC"] == nil
+        raise "You must set the enviornmental veriable SYNTH_FUNC.  See rake -T"
+      end
+  	
+  	if ENV["SYNTH_FUNC"].downcase == "all"
+  	  FUNCTIONS.each do |function|
+        method = function[0]
+        times  = function[1]
+        ENV["SYNTH_FUNC"] = method
+        ENV["SYNTH_TIMES"] = times.to_s
+        m = Main.new
+      	m.search_type = :synthetic
+      	m.run
+      end
+  	end
+  	m = Main.new
+  	m.search_type = :synthetic
+  	m.run  
+  end
 end
 
 task :tables => ["setup:tables"]
