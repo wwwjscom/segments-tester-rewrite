@@ -18,7 +18,7 @@ class Main < Application
 		@s_4grams = Stats.new('4grams')
 		@s_dm     = Stats.new('DM Soundex')
 		@s_seg    = Stats.new('Segments')
-		@s_ed	  = Stats.new('Edit Distance')
+		@s_ed     = Stats.new('Edit Distance')
 
 		# Declare stats instance variables here, since we'll be adding
 		# to them over the life of the program
@@ -27,7 +27,7 @@ class Main < Application
 	def run
 		@sql.populate(@config) # setup function
 		while @sql.has_next?
-			attrs = @sql.next
+			attrs       = @sql.next
 			solution_id = attrs["id"]
 			solution    = attrs["solution"]
 			misspelled  = attrs["misspelled"]
@@ -43,7 +43,7 @@ class Main < Application
 			@eval_4grams = Evaluator.new(@t.grams_4_candidates, solution, solution_id)
 			@eval_dm     = Evaluator.new(@t.dm_candidates, solution, solution_id)
 			@eval_seg    = Evaluator.new(@t.seg_candidates, solution, solution_id)
-			@eval_ed 	 = Evaluator.new(@t.ed_candidates, solution, solution_id)
+			@eval_ed     = Evaluator.new(@t.ed_candidates, solution, solution_id)
 
 			# Segments failed to meet the threshold, and is lower than 3grams,
 			# so use the 3grams results for segments.
