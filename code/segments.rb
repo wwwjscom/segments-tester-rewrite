@@ -9,7 +9,7 @@ class Segments < Application
 
 	def find(query)
 		@misspelled = query
-
+    
 		Log.seg("Method 1")
 		segs = method_1(query)
 		find_candidates(segs)
@@ -47,7 +47,7 @@ class Segments < Application
 			query   = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
 			results = @sql.query(query)
 
-			Log.seg(query)
+			Log.seg("Query: #{query}")
 
 			while row = results.fetch_hash
 				solution = row["solution"]
@@ -75,7 +75,7 @@ class Segments < Application
 	def method_1(query)
 		q = String.new(query)
 		@segments = []
-		while q.size >= 3 do
+		while q.size > 3 do
 			q = q[1..-2]
 			@segments << "%" + q + "%"
 		end
@@ -95,7 +95,7 @@ class Segments < Application
 		q = String.new(query)
 		@segments =  []
 		@length = q.length
-		while @length >= 3 do
+		while @length > 3 do
 			q.gsub!('%', '')
 			q[@length/2] = '%'
 			@length = q.length

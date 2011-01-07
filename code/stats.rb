@@ -17,12 +17,16 @@ class Stats < Application
 	
 	def add(eval)
 		@total_searches += 1
-		found = eval.found?
+		results = eval.found_and_rank
+		Log.term "[#{@name}] Results hash: #{results.to_s}", 'DEBUG'
+		found = results[:found]
 		if found
-			rank = eval.rank
+  		rank = results[:rank]
 			@founds[eval.solution] = rank
 			@total_found += 1
 			@average_rank_a << rank
+			Log.term @name, 'DEBUG'
+			Log.term rank, 'DEBUG'
 		end
 	end
 	
@@ -34,6 +38,8 @@ class Stats < Application
 	
 	def average_rank
 		@rank = 0.0
+		Log.term "#{@name}", 'DEBUG'
+		Log.term @average_rank_a.to_s, 'DEBUG'
 		@average_rank_a.each do |r|
 			begin
 				@rank += r
@@ -62,9 +68,9 @@ class Stats < Application
 			begin
 				@common_rank += @founds[key]
 			rescue
-				Log.app "NOTICE:  3grams found one segments did not find!  Solution: #{key}"
+				Log.app "3grams found one segments did not find!  Solution: #{key}", "WARNING"
 			end
 		end
-		@common_rank = @common_rank/@founds.size
+		@common_rank = @common_rank/stats_3grams.founds.size
 	end
 end

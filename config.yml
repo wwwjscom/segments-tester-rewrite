@@ -4,8 +4,16 @@ db_pass: root
 db_db: segments_tester
 db_test_db: segments_1234
 
+# Do we want to also run the edit distance algorithm?  True or false.
+use_edit_distance: false
+
 # Full path to the CSV file we should use for the queries/misspelles.
-input_file: db/census_names.csv
+#input_file: db/census_names_top_1000.csv
+input_file: db/census_names_all.csv
+
+# Display logs at this level and above
+# Order (highest to lowest) ERROR, WARN, INFO, DEBUG
+log_level: INFO
 
 # This table should have two attributes, query and solution.
 # Mispelled should be what we send to the engines
@@ -14,7 +22,20 @@ input_file: db/census_names.csv
 queries_table: queries
 
 # If segments is below this threashold, we'll consider using the 3grams results
-confidence_threashold: 0.2
+#confidence_threashold: 0.2
+confidence_threashold: 0.4
+
+# Log intemediary results after every x query tests.  Useful when running
+# on massive datasets and wanting to monitor stats and it runs
+log_stats_every_x_runs: 100
+
+# Run through only this many query tests (obviously, this should be less
+# than the total data set size)
+# Set this value to -1 to run the entire set
+max_tests: -1
+
+# If a query ranks higher than this, it is considered not found.
+rank_threshold: 60
 
 # If a candidates edit distance is >= to this, it will be removed from ten candidates list
 # i.e. it will be disreguarded if its value is too high.
