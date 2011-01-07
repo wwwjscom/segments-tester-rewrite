@@ -68,7 +68,7 @@ class Stats < Application
 			begin
 				@common_rank += @founds[key]
 			rescue
-				Log.app "3grams found one segments did not find!  Solution: #{key}", "WARNING"
+				Log.app "3grams found one segments did not find!  Solution: #{key}", "WARN"
 			end
 		end
 		@common_rank = @common_rank/stats_3grams.founds.size
