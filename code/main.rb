@@ -112,16 +112,15 @@ class Main < Application
   	  sql.to_queries
 	  when :synthetic
 	    sql = SQL.new
-  	 	sql.populate(@config) # setup function
+  	 	results = sql.populate(@config) # setup function
       
       queries = Queries.new
       
       method = ENV["SYNTH_FUNC"].downcase
       times = (ENV["SYNTH_TIMES"] == nil) ? 1 : ENV["SYNTH_TIMES"].to_i
-      
-      while sql.has_next?
-        query = sql.next  			
-        s = Synthetic.new(query["id"], query["solution"], query["misspelled"])        
+
+      sql.queries.each do |query|
+        s = Synthetic.new(query.id, query.solution, query.misspelled)
         queries << s.to_synthetic(method, times).to_query
       end
       

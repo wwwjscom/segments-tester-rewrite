@@ -1,7 +1,16 @@
-require "mysql"
+#require "mysql"
 require "code/configs"
 require "code/application"
 require "code/candidates"
+
+class Queries3grams < ActiveRecord::Base
+	set_table_name "queries_3grams"
+end
+
+class Queries4grams < ActiveRecord::Base
+	set_table_name "queries_4grams"
+end
+
 
 class Ngram < Application
 
@@ -29,20 +38,30 @@ class Ngram < Application
 		@config = Configs.read_yml
 		@sql = SQL.new
 		@grams.each do |gram|
-			results = @sql.query "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
-			if results.class == Array
-				add(results.fetch_hash)
+			#results = @sql.query "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
+			if @n == 3
+				results = Queries3grams.find_by_sql "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
 			else
-				while r = results.fetch_hash do
-					add(r)
-				end
+				results = Queries4grams.find_by_sql "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
 			end
+			
+			results.each do |result|
+				add(result)
+			end
+			
+#			if results.class == Array
+#				add(results.fetch_hash)
+#			else
+#				while r = results.fetch_hash do
+#					add(r)
+#				end
+#			end
 		end
 		@candidates
 	end
 	
 	def add(row)
-		solution   = row["solution"]
+		solution   = row['solution']
 		id         = row['id']
 		misspelled = @misspelled
 

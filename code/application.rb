@@ -1,4 +1,15 @@
+require 'rubygems'
+require 'active_record'
 require "code/configs"
+
+ActiveRecord::Base.establish_connection(
+	:adapter=> "jdbcmysql",
+	:host => "localhost",
+	:database=> "segments_tester",
+	:username => "root",
+	:password => "root"
+)
+
 
 class Application
 

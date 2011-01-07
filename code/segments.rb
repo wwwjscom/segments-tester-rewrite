@@ -1,6 +1,10 @@
 require "code/sql"
 require "code/candidates"
 
+class QueriesSegments < ActiveRecord::Base
+	set_table_name "queries_misspelled"
+end
+
 class Segments < Application
 
 	def initialize
@@ -45,20 +49,32 @@ class Segments < Application
 		@sql = SQL.new
 		segments.each do |seg|
 			query   = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
-			results = @sql.query(query)
+#			results = @sql.query(query)
+			results = QueriesSegments.find_by_sql(query)
 
 			Log.seg("Query: #{query}")
 
-			while row = results.fetch_hash
-				solution = row["solution"]
-				id       = row['id']
+			results.each do |result|
+				solution = result["solution"]
+				id			 = result["id"]
 				if @candidates.has_id?(id)
 					@candidates.vote_for(id, 1.0*weight)
 				else
 					c = Candidate.new(@misspelled, solution, id)
 					@candidates.add(c)
-				end # if
-			end # while
+				end # if				
+			end
+
+#			while row = results.fetch_hash
+#				solution = row["solution"]
+#				id       = row['id']
+#				if @candidates.has_id?(id)
+#					@candidates.vote_for(id, 1.0*weight)
+#				else
+#					c = Candidate.new(@misspelled, solution, id)
+#					@candidates.add(c)
+#				end # if
+#			end # while
 			weight = weight # Rought estimate show that using weights doesn't imrpove rank...go figure.
 		end # each
 	end

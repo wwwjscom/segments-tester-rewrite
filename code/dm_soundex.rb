@@ -3,6 +3,11 @@ require "code/configs"
 require "code/application"
 require "code/candidates"
 
+class QueriesDMSoundex < ActiveRecord::Base
+	set_table_name "queries_dm_soundex"
+end
+
+
 class DMSoundex < Application
 
 	attr_reader :query, :encoding
@@ -27,14 +32,19 @@ class DMSoundex < Application
 
 	def find
 		sql = SQL.new
-		results = sql.query "SELECT * FROM #{get_db}.#{@config['queries_table']}_dm_soundex WHERE dmsoundex = '#{@encoding}'"
-		if results.class == Array
-			add(results.fetch_hash)
-		else
-			while r = results.fetch_hash do
-				add(r)
-			end
+		#results = sql.query "SELECT * FROM #{get_db}.#{@config['queries_table']}_dm_soundex WHERE dmsoundex = '#{@encoding}'"
+		results = QueriesDMSoundex.find_by_sql "SELECT * FROM #{get_db}.#{@config['queries_table']}_dm_soundex WHERE dmsoundex = '#{@encoding}'"
+		
+		results.each do |result|
+			add(result)
 		end
+#		if results.class == Array
+#			add(results.fetch_hash)
+#		else
+#			while r = results.fetch_hash do
+#				add(r)
+#			end
+#		end
 		
 		@candidates
 	end

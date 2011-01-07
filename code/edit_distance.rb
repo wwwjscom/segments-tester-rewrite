@@ -2,7 +2,7 @@ require "code/application"
 require "code/candidates"
 require "code/configs"
 require "rubygems"
-require 'amatch'
+#require 'amatch'
 
 class EditDistance < Application
 	

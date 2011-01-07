@@ -1,7 +1,7 @@
 #task :default => [:some_rake_task]
-
 require 'rake'
-require 'spec/rake/spectask'
+
+#require 'spec/rake/spectask'
 
 namespace "setup" do
 	
@@ -41,10 +41,10 @@ namespace "test" do
 	task :run => [:tables, :rspec] do
 	end
 	
-	desc 'Run all rspec tests'
-	Spec::Rake::SpecTask.new('rspec') do |t|
-		t.spec_files = FileList['tests/**/*.rb']
-	end
+#	desc 'Run all rspec tests'
+#	Spec::Rake::SpecTask.new('rspec') do |t|
+#		t.spec_files = FileList['tests/**/*.rb']
+#	end
 
 #	# This task should be deprecated
 #	desc 'Setup the test db -- deprecated...?'

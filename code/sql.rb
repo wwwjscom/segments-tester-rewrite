@@ -1,6 +1,10 @@
-require 'mysql'
+#require 'mysql'
 require "code/application"
 require "code/queries"
+
+class QueriesMisspelled < ActiveRecord::Base
+	set_table_name "queries_misspelled"
+end
 
 class SQL < Application
 	
@@ -18,10 +22,16 @@ class SQL < Application
 	def populate(config = nil)
 		@queries_index = 0 # tracks our location within the queries array
 		@queries = []
-		results = query("SELECT * FROM #{@config['queries_table']}_misspelled;")
-		while r = results.fetch_hash
+		#results = query("SELECT * FROM #{@config['queries_table']}_misspelled;")
+		results = QueriesMisspelled.find_by_sql "SELECT * FROM #{@config['queries_table']}_misspelled;"
+		
+		results.each do |r|
 			@queries << r
 		end
+		
+#		while r = results.fetch_hash
+#			@queries << r
+#		end
 	end
 	
 	def to_queries
