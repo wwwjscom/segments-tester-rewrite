@@ -143,6 +143,8 @@ class Main < Application
 		@s_ed.calculate if Application.use_edit_disance?(@config)
 		
 	 	@s_seg.common_rank(@s_3grams)
+	 	@s_3grams.common_rank(@s_seg)
+	
 	end
 	
 	

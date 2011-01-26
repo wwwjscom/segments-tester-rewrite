@@ -56,21 +56,21 @@ class Stats < Application
 
 	def to_s
 		s = "#{@name} found #{@total_found}/#{@total_searches}: #{@found_percent}% with an average rank of #{@average_rank}"
-		s += " and a common rank of #{@common_rank}" if @name =~ /segment/i
+		s += " and a common rank of #{@common_rank}" if @name =~ /segment/i or @name =~ /3grams/i
 		s
 	end
 	
-	def common_rank(stats_3grams)
+	def common_rank(other_engine)
 		@common_rank = 0.0
-		stats_3grams.founds.each_key do |key|
+		other_engine.founds.each_key do |key|
 #			puts "key: #{key}"
 #			puts "founds[key]: #{@founds[key]}"
 			begin
 				@common_rank += @founds[key]
 			rescue
-				Log.app "3grams found one segments did not find!  Solution: #{key}", "WARN"
+				Log.app "#{other_engine.name} found one #{self.name} did not find!  Solution: #{key}", "WARN"
 			end
 		end
-		@common_rank = @common_rank/stats_3grams.founds.size
+		@common_rank = @common_rank/other_engine.founds.size
 	end
 end
