@@ -2,7 +2,7 @@ require "code/evaluator"
 
 class Stats < Application
 	
-	attr :founds
+	attr :founds, :name
 	
 	# Pass in the engine's name
 	def initialize(name)
