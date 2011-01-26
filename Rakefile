@@ -5,7 +5,7 @@ require 'rake'
 
 namespace "setup" do
 	
-	desc "Setup the solutions tables"
+	desc "Setup the solutions tables - Deprecated! See lib/setup_solutions_tables.rb"
 	task :tables do
 		require "lib/setup_solutions_tables"
 		sst = SetupSolutionsTables.new

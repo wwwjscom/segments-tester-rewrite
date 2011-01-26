@@ -4,6 +4,9 @@
 * Ruby/MySQL
 * MySQL
 * Ruby >= 1.8.7
+* jRuby >= 1.6
+** jruby's active record: $ jruby -S gem install activerecord
+** jruby's mysql adaport: $ jruby -S gem install activerecord-jdbcmysql-adapter
 
 # General notes
 
