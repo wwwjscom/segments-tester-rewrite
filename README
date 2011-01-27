@@ -10,6 +10,18 @@
 
 # General notes
 
+To kick off the job, use the following (edit as required)
+$ /usr/local/jruby/bin/rake run:synthetic SYNTH_FUNC=add_chrs SYNTH_TIMES=1
+
+SYNTH_FUNC are as follows
+* drop_chrs
+* add_chrs
+* replace_chrs
+* swap_adj_chr / swap_chrs
+
+SYNTH_TIMES are as follows
+* 1, 2, 3, 4.  Note, swap_adj_chr can only be 1, and swap_chrs can only be 2, 3, or 4.
+
 Any files ending in _rspec.* should not be edited.  These are used by the testing suite to ensure all is well.
 
 # Production
