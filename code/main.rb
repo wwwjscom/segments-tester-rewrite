@@ -14,6 +14,7 @@ class Main < Application
 
 	def initialize
 		Log.clear
+	  Log.to_term("Initializing", "DEBUG")
 		@config   = Configs.read_yml
 		@s_3grams = Stats.new('3grams')
 		@s_4grams = Stats.new('4grams')
@@ -23,6 +24,7 @@ class Main < Application
     @max_tests = Application.get_config["max_tests"]
 		# Declare stats instance variables here, since we'll be adding
 		# to them over the life of the program
+		Log.to_term("Done initializing", "DEBUG")
 	end
 
 	def run
@@ -107,17 +109,23 @@ class Main < Application
 		to_terminal "in setup_queries"
 	  @queries = case @search_type
     when :query_logs
+      Log.to_term("Search Type: Query Logs", "DEBUG")
       sql = SQL.new
   	 	sql.populate(@config) # setup function
   	  sql.to_queries
 	  when :synthetic
+	    Log.to_term("Search Type: Syntehtic", "DEBUG")
 	    sql = SQL.new
+	    Log.to_term("Populating results", "DEBUG")
   	 	results = sql.populate(@config) # setup function
-      
+      Log.to_term("Done populating", "DEBUG")
+  	  
       queries = Queries.new
       
       method = ENV["SYNTH_FUNC"].downcase
       times = (ENV["SYNTH_TIMES"] == nil) ? 1 : ENV["SYNTH_TIMES"].to_i
+      Log.to_term("SYNTH_FUNC: #{method}", "DEBUG")
+      Log.to_term("SYNTH_TIMES: #{times}", "DEBUG")
 
       sql.queries.each do |query|
         s = Synthetic.new(query.id, query.solution, query.misspelled)
