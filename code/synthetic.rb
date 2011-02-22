@@ -95,9 +95,12 @@ class String
 		swap_a = s[i_a].chr
 		swap_b = s[i_b].chr
 
+    i = 0
 		while swap_a == swap_b do
 			i_b = rand(len)
 			swap_b = s[i_b].chr
+			i += 1
+			break if i == 5
 		end
 
 		s[i_a] = swap_b
