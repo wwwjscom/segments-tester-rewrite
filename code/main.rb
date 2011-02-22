@@ -127,11 +127,14 @@ class Main < Application
       Log.to_term("SYNTH_FUNC: #{method}", "DEBUG")
       Log.to_term("SYNTH_TIMES: #{times}", "DEBUG")
 
-      Log.to_term("Queries size: #{sql.queries.size}", "DEBUG")
+      size = sql.queries.size
+      Log.to_term("Queries size: #{size}", "DEBUG")
+      i=1
       sql.queries.each do |query|
-        Log.to_term(".", "DEBUG", false)
+        Log.to_term("#{i}/#{size}", "DEBUG")
         s = Synthetic.new(query.id, query.solution, query.misspelled)
         queries << s.to_synthetic(method, times).to_query
+        i += 1
       end
       
 		to_terminal "leaving setup_queries"

@@ -95,23 +95,16 @@ class Application
 		end
 
 		# Puts a msgs to the terminal (but also to a log file, go figure!)
-		def self.to_term msg, level = "INFO", use_puts = true
-		  self.term msg, level, use_puts
+		def self.to_term msg, level = "INFO"
+		  self.term msg, level
 		end
 		
-		def self.term msg, level = 'INFO', use_puts = true
+		def self.term msg, level = 'INFO'
 		  return if self.log_msg?(level)
+		  puts Log.format_msg msg, level
 		  f = File.open('logs/terminal.log', 'a')
-		  
-		  if use_puts
-  		  puts Log.format_msg msg, level
-  		  f.puts Log.format_msg(msg, level)
-		  else
-		    print Log.format_msg msg, level
-		    f.print Log.format_msg(msg, level)
-	    end
-		  
-			f.close		  
+		  f.puts Log.format_msg(msg, level)
+			f.close
 		end
 
 		# Deletes all logs
