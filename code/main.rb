@@ -127,7 +127,9 @@ class Main < Application
       Log.to_term("SYNTH_FUNC: #{method}", "DEBUG")
       Log.to_term("SYNTH_TIMES: #{times}", "DEBUG")
 
+      Log.to_term("Queries size: #{sql.queries.size}", "DEBUG")
       sql.queries.each do |query|
+        Log.to_term(".", "DEBUG", false)
         s = Synthetic.new(query.id, query.solution, query.misspelled)
         queries << s.to_synthetic(method, times).to_query
       end
