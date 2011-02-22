@@ -132,9 +132,9 @@ class Main < Application
       i=1
       sql.queries.each do |query|
         Log.to_term("#{i}/#{size}", "DEBUG")
-        Log.to_term("---- query.id:\t\t#{query.id}")
-        Log.to_term("---- query.solution:\t\t#{query.solution}")
-        Log.to_term("---- query.misspelled:\t\t#{query.misspelled}")
+        Log.to_term("---- query.id:\t\t#{query.id}", "DEBUG")
+        Log.to_term("---- query.solution:\t\t#{query.solution}", "DEBUG")
+        Log.to_term("---- query.misspelled:\t\t#{query.misspelled}", "DEBUG")
         
         s = Synthetic.new(query.id, query.solution, query.misspelled)
         queries << s.to_synthetic(method, times).to_query
