@@ -60,11 +60,11 @@ class SetupSolutionsTables < Application
 	# with ngrams...therefore the id column MAY NOT BE UNIQUE, but will
 	# always map to a unique misspelled/solution pair.
 	def insert(type, type_attr, solution, id)
-		sql = SQL.new
-		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
-		sql.query "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
+		#sql = SQL.new
+		ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+		ActiveRecord::Base.connection.execute "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
 	end
-	
+
 	# Parses the line and returns a hash of its contents
 	def parse(line)
 		hash = { :misspelled => line.split(',')[0].chomp, :solution => line.split(',')[1].chomp }
