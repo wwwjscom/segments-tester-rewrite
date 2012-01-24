@@ -1,5 +1,6 @@
 #task :default => [:some_rake_task]
 require 'rake'
+require 'code/application'
 
 #require 'spec/rake/spectask'
 
@@ -10,27 +11,28 @@ namespace "setup" do
 		require "lib/setup_solutions_tables"
 		sst = SetupSolutionsTables.new
 		
+		Application::Log.to_term("Setting up misspelled table", "DEBUG")
 		# Setup queries table where mispelled queries
 		# will be pulled from, and cnadidates will be
 		# checked against
-		sst.drop_table('_misspelled')
+		sst.drop_table('misspelled')
 		sst.setup_queries_table
 		
 		
 		# Generate and insert the 3grams
-		sst.drop_table('_3grams')
-		sst.generate_ngrams(3)
-		sst.insert_ngrams(3)
+#		sst.drop_table('_3grams')
+#		sst.generate_ngrams(3)
+#		sst.insert_ngrams(3)
 		
 		# Generate and insert the 4grams
-		sst.drop_table('_4grams')
-		sst.generate_ngrams(4)
-		sst.insert_ngrams(4)
+#		sst.drop_table('_4grams')
+#		sst.generate_ngrams(4)
+#		sst.insert_ngrams(4)
 		
 		# Generate and insert DM Soundex
-		sst.drop_table('_dm_soundex')
-		sst.generate_dm_soundex_encodings
-		sst.insert_dm_soundex_encodings
+#		sst.drop_table('_dm_soundex')
+#		sst.generate_dm_soundex_encodings
+#		sst.insert_dm_soundex_encodings
 	end
 	
 end
