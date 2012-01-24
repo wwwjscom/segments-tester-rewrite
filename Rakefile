@@ -6,7 +6,7 @@ require 'code/application'
 
 namespace "setup" do
 	
-	desc "Setup the solutions tables - Deprecated! See lib/setup_solutions_tables.rb"
+	desc "Setup the solutions tables"
 	task :tables do
 		require "lib/setup_solutions_tables"
 		sst = SetupSolutionsTables.new

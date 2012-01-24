@@ -1,7 +1,4 @@
 require "code/configs"
-### IMPORTANT NOTE!!! ###
-# This class requires updating.  Since the switch to jRuby/active record it no longer works.
-# It should be updated to either just import a default mysql schema, or use migrations.
 require "code/ngram"
 require "code/sql"
 require "code/application"
