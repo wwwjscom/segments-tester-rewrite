@@ -70,6 +70,7 @@ class Stats < Application
 				@common_rank += @founds[key]
 			rescue
 				Log.app "#{other_engine.name} found one #{self.name} did not find!  Solution: #{key}", "WARN"
+				Log.to_term "#{other_engine.name} found one #{self.name} did not find!  Solution: #{key}", "WARN"
 			end
 		end
 		@common_rank = @common_rank/other_engine.founds.size
