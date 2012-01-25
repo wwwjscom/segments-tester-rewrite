@@ -63,6 +63,6 @@ class Tester < Application
 	
 	def self.finalize_thread start_time
 		ActiveRecord::Base.connection.close
-	 	Log.to_term "\t#{Thread.current[:name]} finished in #{ "%0.2f" % (Time.now - start_time)} seconds", "DEBUG"
+	 	Log.app "\t#{Thread.current[:name]} finished in #{ "%0.2f" % (Time.now - start_time)} seconds", "INFO"
 	end	
 end
