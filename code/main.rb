@@ -28,7 +28,6 @@ class Main < Application
 	end
 
 	def run
-		to_terminal "Inside run"
 		i=0
 	  setup_queries
     @queries.all.each do |query|
@@ -46,11 +45,11 @@ class Main < Application
       
       log_intermediary_results if i%Application.get_config["log_stats_every_x_runs"].to_i == 0
       
-      to_terminal "Running - #{i}/#{@queries.all.size}"
+      Log.to_term("Running - #{i}/#{@queries.all.size}", "INFO")
 
-      to_terminal ""
-  		to_terminal "Solution: #{solution}"
-  		to_terminal "Misspelling: #{misspelled}"
+      Log.to_term("", "INFO")
+  		Log.to_term("Solution: #{solution}", "DEBUG")
+  		Log.to_term("Misspelling: #{misspelled}", "DEBUG")
 
       next if solution.downcase.include?("j")
       next if misspelled.downcase.include?("j")
@@ -60,7 +59,7 @@ class Main < Application
 			Log.seg "Misspelled: #{misspelled}"
 			Log.seg "Solution: #{solution}"
 
-			to_terminal "Finding..."
+			Log.to_term("Finding...", "DEBUG")
       find(solution_id, solution, misspelled)
       
 			Log.app ""
@@ -70,13 +69,13 @@ class Main < Application
 			Log.app ""
 			
 
-  		to_terminal "Swap?"
+  		Log.to_term("Swap?", "DEBUG")
       swap_results?
       
-  		to_terminal "Adding results"
+  		Log.to_term("Adding results", "DEBUG")
       add_results
       
-  		to_terminal "Logging findings"
+  		Log.to_term("Logging findings", "DEBUG")
       log_findings
 
 			Log.app ""
@@ -89,7 +88,7 @@ class Main < Application
 			Log.app "==============================================="
 		end
 
-		to_terminal "Calculating stats"
+		Log.to_term("Calculating stats", "DEBUG")
     calculate_stats
 
 		# Display the results
@@ -110,7 +109,7 @@ class Main < Application
 	end
 	
 	def log_intermediary_results
-	  to_terminal "Calculating intermediary stats"
+	  Log.to_term("Calculating intermediary stats", "DEBUG")
     calculate_stats
     Log.intermediary_stats "-"*50
     Log.intermediary_stats "#{ENV["SYNTH_FUNC"]} x#{ENV["SYNTH_TIMES"]}"
@@ -124,7 +123,6 @@ class Main < Application
 	# Populates the queries instance variable based on the search type
 	# so that we can later iterate over them.
 	def setup_queries
-		to_terminal "in setup_queries"
 	  @queries = case @search_type
     when :query_logs
       Log.to_term("Search Type: Query Logs", "DEBUG")
@@ -159,10 +157,9 @@ class Main < Application
         i += 1
       end
       
-		to_terminal "leaving setup_queries"
 
 		Log.stats "-- #{method} #{times} --"
-    to_terminal "-- #{method} #{times} --"
+    Log.to_term("-- #{method} #{times} --", "DEBUG")
       
       queries
     end # case
@@ -231,35 +228,27 @@ class Main < Application
 
 		Log.app ""
 		Log.app '3GRAMS'
-		#to_terminal @t.grams_3_candidates
 		stats = @eval_3grams.found_and_rank
 		Log.app "\tFound:#{stats[:found]}"
 		Log.app "\tRank:#{stats[:rank]}" if stats[:found]
 
 		Log.app '4GRAMS'
-		#to_terminal @t.grams_4_candidates
 		stats = @eval_4grams.found_and_rank
 		Log.app "\tFound:#{stats[:found]}"
 		Log.app "\tRank:#{stats[:rank]}" if stats[:found]
 
 		Log.app 'DM-Soundex'
-		#to_terminal @t.dm_candidates
 		stats = @eval_dm.found_and_rank
 		Log.app "\tFound:#{stats[:found]}"
 		Log.app "\tRank:#{stats[:rank]}" if stats[:found]
 
 		Log.app 'SEGMENTS'
-		#to_terminal @t.seg_candidates
 		stats = @eval_seg.found_and_rank
 		Log.app "\tFound:#{stats[:found]}"
 		Log.app "\tRank:#{stats[:rank]}" if stats[:found]
 		
 		Log.app ""
     
-	end
-	
-	def to_terminal(msg)
-	  Log.to_term(msg)
 	end
 
 end
