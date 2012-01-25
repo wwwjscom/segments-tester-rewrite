@@ -33,6 +33,10 @@ class Main < Application
 	  setup_queries
     @queries.all.each do |query|
       to_terminal '-'*50
+			Log.app "===============================================", "INFO"
+			Log.app "Start search for #{solution} as #{misspelled}", "INFO"
+			Log.app "===============================================", "INFO"
+
       #p @queries.all.size	
       solution_id = query.solution_id
       solution    = query.solution
@@ -57,10 +61,19 @@ class Main < Application
       Log.seg("-"*50)
 			Log.seg "Misspelled: #{misspelled}"
 			Log.seg "Solution: #{solution}"
+			Log.app "Misspelled: #{misspelled}"
+			Log.app "Solution: #{solution}"
 
 			to_terminal "Finding..."
       find(solution_id, solution, misspelled)
       
+			Log.app ""
+			Log.app "---- Start Pre-(potential)-swap results: ----"
+			results_from_this_query
+			Log.app "---- End Pre-(potential)-swap results: ----"
+			Log.app ""
+			
+
   		to_terminal "Swap?"
       swap_results?
       
@@ -69,6 +82,16 @@ class Main < Application
       
   		to_terminal "Logging findings"
       log_findings
+
+			Log.app ""
+			Log.app "---- Start Post-(potential)-swap results: ----"
+			results_from_this_query
+			Log.app "---- End Post-(potential)-swap results: ----"
+			Log.app ""
+			
+			Log.app "==============================================="
+			Log.app "End search for #{solution} as #{misspelled}"
+			Log.app "==============================================="
 		end
 
 		to_terminal "Calculating stats"
@@ -175,8 +198,6 @@ class Main < Application
 		@eval_dm     = Evaluator.new(@t.dm_candidates, solution, solution_id, "dm")
 		@eval_seg    = Evaluator.new(@t.seg_candidates, solution, solution_id, "seg")
 		@eval_ed     = Evaluator.new(@t.ed_candidates, solution, solution_id, "eg") if Application.use_edit_disance?(@config)
-
-		results_from_this_query
   end
   
   
@@ -213,8 +234,7 @@ class Main < Application
 
 	def results_from_this_query
 
-    Log.app ""
-
+		Log.app ""
 		Log.app '3GRAMS'
 		#to_terminal @t.grams_3_candidates
 		stats = @eval_3grams.found_and_rank

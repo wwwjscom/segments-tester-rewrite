@@ -14,27 +14,27 @@ class Segments < Application
 	def find(query)
 		@misspelled = query
     
-		Log.seg("Method 1")
+		Log.seg("Method 1", "DEBUG")
 		segs = method_1(query)
 		find_candidates(segs)
 		
-		Log.seg("Method 3")
+		Log.seg("Method 3", "DEBUG")
 		segs = method_3(query)
 		find_candidates(segs)
 
-		Log.seg("Method 4")
+		Log.seg("Method 4", "DEBUG")
 		segs = method_4(query)
 		find_candidates(segs)
 
-		Log.seg("Method 5")
+		Log.seg("Method 5", "DEBUG")
 		segs = method_5(query)
 		find_candidates(segs)
 
-		Log.seg("Method 6")
+		Log.seg("Method 6", "DEBUG")
 		segs = method_6(query)
 		find_candidates(segs)
 
-		Log.seg("Method 7")
+		Log.seg("Method 7", "DEBUG")
 		segs = method_7(query)
 		find_candidates(segs)
 
@@ -52,7 +52,7 @@ class Segments < Application
 #			results = @sql.query(query)
 			results = QueriesSegments.find_by_sql(query)
 
-			Log.seg("Query: #{query}")
+			Log.seg("Query: #{query}", "DEBUG")
 
 			results.each do |result|
 				solution = result["solution"]
@@ -127,9 +127,9 @@ class Segments < Application
 	# %Slovakia%
 	# %akia
 	def method_4(query)
-		Log.seg("Method 4 given: #{query}")
+		Log.seg("Method 4 given: #{query}", "DEBUG")
 		query = ["%" + query[(query.length/2)..-1]]
-		Log.seg("Method 4 yields: #{query}")
+		Log.seg("Method 4 yields: #{query}", "DEBUG")
 		query
 	end
 

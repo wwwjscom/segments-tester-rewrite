@@ -33,7 +33,7 @@ class Evaluator < Application
 		rank = (true_rank > 1) ? (true_rank/2)+1 : true_rank
 		
 		if rank > Application.get_config['rank_threshold'].to_i
-		  Log.app "[#{@engine_name}] Rank is too high: #{rank}; setting found to false"
+		  Log.app "[#{@engine_name}] Rank is too high: #{rank}; setting found to false", "DEBUG"
 		  return {:rank => nil, :found => false}
 	  end
 		
@@ -100,12 +100,11 @@ class Evaluator < Application
 	# compare the two and return the higher of the two.
 	def self.compare_confidence(e1, e2)
 		@config = Configs.read_yml
-		Log.app '-'*50
-		Log.app "#{e1.engine_name} confidence: #{e1.confidence}.  #{e2.engine_name} confidence #{e2.confidence}"
+		Log.app "#{e1.engine_name} confidence: #{e1.confidence}.  #{e2.engine_name} confidence #{e2.confidence}", "DEBUG"
 		if e1.confidence <= @config["confidence_threashold"].to_f
-			Log.app "Segments confidence below threadhold, considering a change..."
+			Log.app "Segments confidence below threadhold, considering a change...", "DEBUG"
 			ret =  (e1.confidence < e2.confidence) ? "e2" : "e1"
-			Log.app 'Recomend changing to ngram results' if ret == "e2"
+			Log.app('Recomend changing to ngram results', "INFO") if ret == "e2"
 		else
 			ret = "e1"
 		end
