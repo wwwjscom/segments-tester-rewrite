@@ -15,8 +15,8 @@ input_file: db/medtermsalpha.csv
 
 # Display logs at this level and above
 # Order (highest to lowest) ERROR, WARN, INFO, DEBUG
-#log_level: INFO
-log_level: DEBUG
+log_level: INFO
+#log_level: DEBUG
 
 # This table should have two attributes, query and solution.
 # Mispelled should be what we send to the engines
