@@ -47,7 +47,7 @@ class Main < Application
       
       Log.to_term("Running - #{i}/#{@queries.all.size}", "INFO")
 
-      Log.to_term("", "INFO")
+      Log.to_term("", "DEBUG")
   		Log.to_term("Solution: #{solution}", "DEBUG")
   		Log.to_term("Misspelling: #{misspelled}", "DEBUG")
 
