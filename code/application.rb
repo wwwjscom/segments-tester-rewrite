@@ -2,12 +2,13 @@ require 'rubygems'
 require 'active_record'
 require "code/configs"
 
+# FIXME: Why the fuck doesn't this read the config values?
 ActiveRecord::Base.establish_connection(
 	:adapter=> "jdbcmysql",
 	:host => "localhost",
 	:database=> "segments_tester",
 	:username => "root",
-	:password => "root"
+	:password => "temp4now"
 )
 
 

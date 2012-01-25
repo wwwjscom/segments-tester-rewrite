@@ -32,15 +32,13 @@ class Main < Application
 		i=0
 	  setup_queries
     @queries.all.each do |query|
-      to_terminal '-'*50
-			Log.app "===============================================", "INFO"
-			Log.app "Start search for #{solution} as #{misspelled}", "INFO"
-			Log.app "===============================================", "INFO"
-
       #p @queries.all.size	
       solution_id = query.solution_id
       solution    = query.solution
       misspelled  = query.misspelled
+
+      Log.app "==============================================="
+      Log.app "Start search for #{solution} as #{misspelled}"
 
       i+=1
       
@@ -89,7 +87,6 @@ class Main < Application
 			Log.app "---- End Post-(potential)-swap results: ----"
 			Log.app ""
 			
-			Log.app "==============================================="
 			Log.app "End search for #{solution} as #{misspelled}"
 			Log.app "==============================================="
 		end
@@ -268,3 +265,4 @@ class Main < Application
 	end
 
 end
+

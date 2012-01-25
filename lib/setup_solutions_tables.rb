@@ -1,14 +1,10 @@
 require "code/configs"
-### IMPORTANT NOTE!!! ###
-# This class requires updating.  Since the switch to jRuby/active record it no longer works.
-# It should be updated to either just import a default mysql schema, or use migrations.
 require "code/ngram"
 require "code/sql"
 require "code/application"
 require "code/dm_soundex"
 
-class QueriesMisspelled < ActiveRecord::Base         
-  set_table_name "#{@config['queries_table']}_misspelled"
+class Migrations < ActiveRecord::Migration
 end
 
 class SetupSolutionsTables < Application
@@ -17,6 +13,7 @@ class SetupSolutionsTables < Application
 
 	def initialize
 		@config = Configs.read_yml
+		puts `mysql -u #{@config['db_user']} --password=#{@config['db_pass']} -e "CREATE DATABASE IF NOT EXISTS #{@config['db_db']}"`
 		read_file
 	end
 
@@ -40,22 +37,31 @@ class SetupSolutionsTables < Application
 		@lines[@lines_index-1].chomp
 	end
 	
+	# DEPRECATED
 	# Drops the given table from the db
 	def drop_table(table_suffix = nil)
 		sql = SQL.drop_table(table_suffix)
 	end
 	
+	# Drops the table of a specific engine
+	def drop_table(engine)
+		begin
+			Migrations.drop_table("#{@config['queries_table']}_#{engine}") 
+		rescue 
+			Log.to_term("#{engine} table doesn't exist to be dropped...", "WARN")
+		end
+	end
+
 	# Inserts a set of data into the correct table
 	# We don't use auto-incrementing id's because it'll cause a problem
 	# with ngrams...therefore the id column MAY NOT BE UNIQUE, but will
 	# always map to a unique misspelled/solution pair.
 	def insert(type, type_attr, solution, id)
-
-		sql = SQL.new
-		sql.query "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
-		sql.query "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
+		#sql = SQL.new
+		ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+		ActiveRecord::Base.connection.execute "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
 	end
-	
+
 	# Parses the line and returns a hash of its contents
 	def parse(line)
 		hash = { :misspelled => line.split(',')[0].chomp, :solution => line.split(',')[1].chomp }
