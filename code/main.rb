@@ -59,8 +59,6 @@ class Main < Application
       Log.seg("-"*50)
 			Log.seg "Misspelled: #{misspelled}"
 			Log.seg "Solution: #{solution}"
-			Log.app "Misspelled: #{misspelled}"
-			Log.app "Solution: #{solution}"
 
 			to_terminal "Finding..."
       find(solution_id, solution, misspelled)
@@ -203,7 +201,7 @@ class Main < Application
   def swap_results?
     if Evaluator.compare_confidence(@eval_seg, @eval_3grams) == "e2"
 			@eval_seg = @eval_3grams
-			Log.app 'Changing...'
+			Log.app 'Changing...', "DEBUG"
 			Log.term "[Segments] Changing results"
 		end
   end
@@ -222,8 +220,8 @@ class Main < Application
   # Log some information
   def log_findings
     stats = @eval_seg.found_and_rank
-    Log.seg "Segments Found? #{stats[:found]}"
-		Log.seg "Segments Rank: #{stats[:rank]}" if stats[:found]
+    Log.seg "Segments Found? #{stats[:found]}", "DEBUG"
+		Log.seg ("Segments Rank: #{stats[:rank]}", "DEBUG") if stats[:found]
 		#Log.seg "Candidates: #{@t.seg_candidates.to_s}"
 		# ...
   end
