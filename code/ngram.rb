@@ -27,7 +27,8 @@ class Ngram < Application
 		(0..query.length).map do |index|
 			q = query[index, n]
 			unless q.length < 2
-				@grams << query[index, n]
+				gram = query[index, n]
+				@grams << gram unless gram.length < n
 			end
 		end
 	end
