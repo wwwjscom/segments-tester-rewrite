@@ -99,6 +99,20 @@ namespace "run" do
   	m.search_type = :synthetic
   	m.run  
   end
+
+
+  desc "Data Set Statistics"
+  task :stats do
+	  require "lib/stats"
+	  s = Stats.new
+	  puts "Data Set size: #{s.count}"
+	  puts "Query Length:"
+	  puts "\tAvg: #{s.avg_query_length}"
+	  puts "\tMin: #{s.min_query_length}"
+	  puts "\tMax: #{s.max_query_length}"
+	  puts "\tMedian: #{s.median_query_length}"
+	  puts "\tMode: #{s.mode_query_length}"
+  end
 end
 
 task :tables => ["setup:tables"]
