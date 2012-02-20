@@ -67,17 +67,11 @@ class SetupSolutionsTables < Application
 		hash = { :misspelled => line.split(',')[0].chomp, :solution => line.split(',')[1].chomp }
 	end
 	
-	
 	def setup_queries_table
 		id = 1
 		@lines.each do |line|
 			line = parse(line)
-			#insert('_misspelled', line[:misspelled], line[:solution], id)
-      QueriesMisspelled.create({ 
-        :misspelled => line[:misspelled], 
-        :solution => line[:solution],
-        :id => id
-      })
+			insert('_misspelled', line[:misspelled], line[:solution], id)
 			id += 1
 		end
 	end
