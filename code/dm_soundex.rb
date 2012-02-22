@@ -13,6 +13,7 @@ class DMSoundex < Application
 	attr_reader :query, :encoding
 
 	def initialize(query)
+		Thread.current[:step] = 1
 		@misspelled = query
 		@candidates = Candidates.new
 		@config = Configs.read_yml

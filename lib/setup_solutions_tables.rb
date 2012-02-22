@@ -58,8 +58,12 @@ class SetupSolutionsTables < Application
 	# always map to a unique misspelled/solution pair.
 	def insert(type, type_attr, solution, id)
 		#sql = SQL.new
-		ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
-		ActiveRecord::Base.connection.execute "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
+		#ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+		#ActiveRecord::Base.connection.execute "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
+		ActiveRecord::Base.connection_pool.with_connection do |conn|
+			conn.execute "INSERT INTO #{@config['queries_table']}#{type} (`id`, `#{type.gsub('_', '')}`, `solution`) VALUES (#{id}, LCASE('#{type_attr}'), LCASE('#{solution}'))"
+			ActiveRecord::Base.connection_pool.checkin(conn)
+		end
 	end
 
 	# Parses the line and returns a hash of its contents
@@ -81,12 +85,31 @@ class SetupSolutionsTables < Application
 	
 	# Generate the DM Soundex codes from the solutions prior to insertion
 	def generate_dm_soundex_encodings
-		@dm_soundex_objs = []
+		type = "_dm_soundex"
+		ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+		threads = []
+		id = 1
 		@lines.each do |line|
 			query = parse(line)[:solution]
 			next if query.downcase.include?("j")
-#      		p query
-			@dm_soundex_objs << DMSoundex.new(query)
+			threads << Thread.new(query, id) { |myQuery, myId|
+				obj = DMSoundex.new(myQuery)
+				encoding = obj.encoding
+				Thread.current[:step] = 9
+				insert('_dm_soundex', encoding, obj.query, myId)
+				Thread.current[:step] = 10
+			}
+			# Don't wanna saturate the machien in threads
+			print "."*threads.size
+			puts "(#{threads.size})"
+			hold = false
+			while threads.delete_if{ |t| !t.alive? }.size >= 50 or hold
+				sleep 0.1
+				puts "(#{threads.size}) - sleeping"
+				hold = true
+				hold = false if threads.size <= 30
+			end
+			id += 1
 		end
 	end
 	

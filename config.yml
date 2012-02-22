@@ -9,9 +9,9 @@ db_test_db: segments_1234
 use_edit_distance: false
 
 # Full path to the CSV file we should use for the queries/misspelles.
-input_file: db/medtermsalpha.csv
+#input_file: db/medtermsalpha.csv
 #input_file: db/census_names_top_1000.csv
-#input_file: db/census_names_all.csv
+input_file: db/census_names_all.csv
 
 # Display logs at this level and above
 # Order (highest to lowest) ERROR, WARN, INFO, DEBUG

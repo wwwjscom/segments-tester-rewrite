@@ -8,7 +8,9 @@ ActiveRecord::Base.establish_connection(
 	:host => "localhost",
 	:database=> "segments_tester",
 	:username => "root",
-	:password => "temp4now"
+	:password => "temp4now",
+	:pool => 30,
+	:wait_timeout => 10
 )
 
 
