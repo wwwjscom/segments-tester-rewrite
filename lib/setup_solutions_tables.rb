@@ -38,22 +38,27 @@ class SetupSolutionsTables < Application
         end
     end
 
+    # Private: ...
     def has_next?
         @lines_index < @lines.size
     end
 
+    # Private: ...
     def next
         @lines_index += 1
         @lines[@lines_index-1].chomp
     end
 
-    # DEPRECATED
     # Drops the given table from the db
+    #
+    # Deprecated: Should be using migrations now
     def drop_table(table_suffix = nil)
         sql = SQL.drop_table(table_suffix)
     end
 
-    # Drops the table of a specific engine
+    # Public Drops the table of a specific engine
+    #
+    # Returns nothing
     def drop_table(engine)
         begin
             Migrations.drop_table("#{@config['queries_table']}_#{engine}") 
@@ -82,6 +87,7 @@ class SetupSolutionsTables < Application
     end
 
     def setup_queries_table
+        make_table('_misspelled')
         id = 1
         @lines.each do |line|
             line = parse(line)
@@ -90,40 +96,72 @@ class SetupSolutionsTables < Application
         end
     end
 
+    # Private: Create a db table
+    #
+    # type - the type of engine we are using. Should be one of the following:
+    #   "_dm_soundex", "_misspelled", "_3grams", "_4grams"
+    #
+    # Returns nothing
+    def make_table(type)
+        ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+    end
 
-    # --- DM Soundex Methods ---
+    # Private: Checks to see if we have too many threads.
+    # If so, hold off on creating more until some finnish.
+    #
+    # threads - an array of Tread objects
+    #
+    # Returns only when ready to proceed.
+    def prevent_thread_saturation(threads)
+        hold = false
+        while threads.delete_if{ |t| !t.alive? }.size >= 50 or hold
+            sleep 0.1
+            puts "(#{threads.size}) - sleeping"
+            hold = true
+            hold = false if threads.size <= 30
+        end
+    end
 
-    # Generate the DM Soundex codes from the solutions prior to insertion
+    # Public: Main method for generating and inserting the dm soundex encodings
+    #
+    # Returns nothing
     def generate_dm_soundex_encodings
         type = "_dm_soundex"
-        ActiveRecord::Base.connection.execute "CREATE TABLE IF NOT EXISTS #{@config['queries_table']}#{type} (`id` INT NOT NULL, `#{type.gsub('_', '')}` VARCHAR(255) NOT NULL, `solution` VARCHAR(255) NOT NULL)"
+        make_table(type)
         threads = []
         id = 1
         @lines.each do |line|
             query = parse(line)[:solution]
             next if query.downcase.include?("j")
-            threads << Thread.new(query, id) { |myQuery, myId|
-                obj = DMSoundex.new(myQuery)
-                encoding = obj.encoding
-                Thread.current[:step] = 9
-                insert('_dm_soundex', encoding, obj.query, myId)
-                Thread.current[:step] = 10
-            }
+            threads << new_dm_soundex_thread(query, id)
+
             # Don't wanna saturate the machien in threads
             print "."*threads.size
             puts "(#{threads.size})"
-            hold = false
-            while threads.delete_if{ |t| !t.alive? }.size >= 50 or hold
-                sleep 0.1
-                puts "(#{threads.size}) - sleeping"
-                hold = true
-                hold = false if threads.size <= 30
-            end
+            prevent_thread_saturation(threads)
+
             id += 1
         end
     end
 
-    # Deprecated
+    # Private: Kicks off a new dm soundex thread that will
+    # encode and insert the encoding
+    #
+    # query - The query to be encoded
+    # id - the int id of the solution. Used on insertion.
+    #
+    # Returns a Thread object
+    def new_dm_soundex_thread(query, id)
+            Thread.new(query, id) { |myQuery, myId|
+                obj = DMSoundex.new(myQuery)
+                encoding = obj.encoding
+                insert('_dm_soundex', encoding, obj.query, myId)
+            }
+    end
+
+    # Public: Used to insert the soundex encodings into the db
+    #
+    # Deprecated: We now use threads instead of this method.
     def insert_dm_soundex_encodings
         id = 1
         @dm_soundex_objs.each do |obj|
@@ -134,26 +172,53 @@ class SetupSolutionsTables < Application
     end
 
 
-    # --- NGram Methods ---
-
-    # Generates the ngrams from the solutions prior to inserting them
+    # Public: Main method for generating and inersting the ngram encodings
+    #
+    # Returns nothing
     def generate_ngrams(n)
-        @ngram_objs = [] # Holds a bunch of ngram objects
+        threads = []
+        type = (n == 3) ? "_3grams" : "_4grams"
+        make_table(type)
+        id = 1
         @lines.each do |line|
             query = parse(line)[:solution]
-            @ngram_objs << Ngram.new(n, query)
-        end
-    end
+            threads << new_ngram_thread(query, id, type, n)
 
-    # Loops over the gram objects and calls insert on each
-    def insert_ngrams(n)
-        id = 1
-        type = (n == 3) ? "_3grams" : "_4grams"
-        @ngram_objs.each do |obj|
-            obj.grams.each do |gram|
-                insert(type, gram, obj.query, id)
-            end
+            # Don't wanna saturate the machien in threads
+            prevent_thread_saturation(threads)
+
             id += 1
         end
     end
+
+    # Private: Kicks off a new ngrams thread that will
+    # encode and insert the encoding
+    #
+    # query - The query to be encoded
+    # id - the int id of the solution. Used on insertion.
+    # type - the type of ngram:
+    #   "_3grams", "_4grams"
+    #
+    # Returns a Thread object
+    def new_ngram_thread(query, id, type, n)
+        Thread.new(query, id, type, n) { |myQuery, myId, myType, n|
+            obj = Ngram.new(n, myQuery)
+            obj.grams.each do |gram|
+                insert(myType, gram, obj.query, myId)
+            end
+        }
+    end
+
+
+#    # Loops over the gram objects and calls insert on each
+#    def insert_ngrams(n)
+#        id = 1
+#        type = (n == 3) ? "_3grams" : "_4grams"
+#        @ngram_objs.each do |obj|
+#            obj.grams.each do |gram|
+#                insert(type, gram, obj.query, id)
+#            end
+#            id += 1
+#        end
+#    end
 end
