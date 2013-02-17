@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'active_record'
-require "code/configs"
+
+require_relative "configs"
 
 # FIXME: Why the fuck doesn't this read the config values?
 ActiveRecord::Base.establish_connection(

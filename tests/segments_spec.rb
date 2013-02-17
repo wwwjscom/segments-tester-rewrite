@@ -1,4 +1,4 @@
-require "code/segments"
+require_relative "../code/segments"
 
 describe Segments do
 	

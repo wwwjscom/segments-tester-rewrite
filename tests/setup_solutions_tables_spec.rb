@@ -1,5 +1,5 @@
 require "spec"
-require "/Users/wwwjscom/Code/Segments Tester/lib/setup_solutions_tables.rb"
+require_relative "../lib/setup_solutions_tables"
 
 describe SetupSolutionsTables do
 	

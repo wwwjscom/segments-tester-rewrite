@@ -1,6 +1,6 @@
 require "spec"
-require "code/evaluator"
-require "code/candidates"
+require_relative "../code/evaluator"
+require_relative "../code/candidates"
 
 describe Evaluator do
 	

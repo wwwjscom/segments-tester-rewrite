@@ -1,5 +1,5 @@
-require "code/sql"
-require "code/candidates"
+require_relative "sql"
+require_relative "candidates"
 
 class QueriesSegments < ActiveRecord::Base
 	set_table_name "queries_misspelled"

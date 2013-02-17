@@ -1,6 +1,6 @@
-require 'code/sql'
-require "code/configs"
-require "code/application"
+require_relative '../code/sql'
+require_relative "../code/configs"
+require_relative "../code/application"
 
 describe SQL do
 	

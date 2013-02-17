@@ -1,6 +1,6 @@
 #task :default => [:some_rake_task]
 require 'rake'
-require 'code/application'
+require_relative 'code/application'
 
 #require 'spec/rake/spectask'
 

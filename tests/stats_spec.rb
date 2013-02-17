@@ -1,5 +1,5 @@
 require "spec"
-require "code/stats"
+require_relative "../code/stats"
 
 describe Stats do
 

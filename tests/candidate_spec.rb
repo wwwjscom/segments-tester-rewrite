@@ -1,4 +1,4 @@
-require "code/candidates"
+require_relative "../code/candidates"
 
 describe Candidates do
 	

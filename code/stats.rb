@@ -1,4 +1,4 @@
-require "code/evaluator"
+require_relative "evaluator"
 
 class Stats < Application
 	

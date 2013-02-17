@@ -1,8 +1,8 @@
-require "code/application"
-require "code/ngram"
-require "code/segments"
-require "code/dm_soundex"
-require "code/edit_distance"
+require_relative "application"
+require_relative "ngram"
+require_relative "segments"
+require_relative "dm_soundex"
+require_relative "edit_distance"
 
 class Tester < Application
 	

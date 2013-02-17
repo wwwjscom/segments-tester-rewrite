@@ -1,5 +1,5 @@
 require "spec"
-require "code/ngram"
+require_relative "../code/ngram"
 
 describe Ngram do
 	

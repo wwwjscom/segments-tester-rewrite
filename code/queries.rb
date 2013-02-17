@@ -1,4 +1,4 @@
-require "code/application"
+require_relative "application"
 
 
 class Queries < Application

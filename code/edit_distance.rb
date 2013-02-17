@@ -1,6 +1,6 @@
-require "code/application"
-require "code/candidates"
-require "code/configs"
+require_relative "application"
+require_relative "candidates"
+require_relative "configs"
 require "rubygems"
 #require 'amatch'
 

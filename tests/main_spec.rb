@@ -1,4 +1,4 @@
-require 'code/main'
+require_relative '../code/main'
 require "spec"
 
 describe Main do

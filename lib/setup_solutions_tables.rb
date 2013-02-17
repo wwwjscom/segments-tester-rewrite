@@ -1,8 +1,8 @@
-require "code/configs"
-require "code/ngram"
-require "code/sql"
-require "code/application"
-require "code/dm_soundex"
+require_relative "../code/configs"
+require_relative "../code/ngram"
+require_relative "../code/sql"
+require_relative "../code/application"
+require_relative "../code/dm_soundex"
 
 # Used to run migrations during setup
 class Migrations < ActiveRecord::Migration

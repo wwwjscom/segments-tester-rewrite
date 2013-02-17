@@ -1,4 +1,4 @@
-require "code/configs"
+require_relative "configs"
 
 class Stats
 

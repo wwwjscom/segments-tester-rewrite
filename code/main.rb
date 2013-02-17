@@ -1,11 +1,11 @@
 require 'yaml'
-require "code/sql"
-require "code/configs"
-require "code/tester"
-require "code/application"
-require "code/evaluator"
-require "code/stats"
-require "code/synthetic"
+require_relative "sql"
+require_relative "configs"
+require_relative "tester"
+require_relative "application"
+require_relative "evaluator"
+require_relative "stats"
+require_relative "synthetic"
 
 class Main < Application
 

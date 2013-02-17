@@ -1,4 +1,4 @@
-require "code/dm_soundex"
+require_relative "../code/dm_soundex"
 
 describe DMSoundex do
 	

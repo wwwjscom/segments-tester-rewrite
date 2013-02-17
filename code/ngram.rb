@@ -1,7 +1,7 @@
 #require "mysql"
-require "code/configs"
-require "code/application"
-require "code/candidates"
+require_relative "configs"
+require_relative "application"
+require_relative "candidates"
 
 class Queries3grams < ActiveRecord::Base
 	set_table_name "queries_3grams"

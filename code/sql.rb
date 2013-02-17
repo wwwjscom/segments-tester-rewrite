@@ -1,6 +1,5 @@
-#require 'mysql'
-require "code/application"
-require "code/queries"
+require_relative "application"
+require_relative "queries"
 
 class QueriesMisspelled < ActiveRecord::Base
 	set_table_name "queries_misspelled"

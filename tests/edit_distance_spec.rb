@@ -1,5 +1,5 @@
 require "spec"
-require "code/edit_distance"
+require_relative "../code/edit_distance"
 
 describe EditDistance do
 	
