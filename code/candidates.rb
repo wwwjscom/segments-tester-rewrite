@@ -3,7 +3,11 @@ class Candidates
 	attr_accessor :candidates		
 	
 	def initialize
-		@candidates = [] # An array of candidate objects
+		@candidates = Array.new # An array of candidate objects
+	end
+	
+	def prune
+	 @candidates.delete_if { |x| x.votes < 1 }
 	end
 	
 	def add(candidate)
@@ -78,5 +82,6 @@ class Candidate < Candidates
 		@solution   = solution
 		@id         = id
 		@votes		= votes
+		self
 	end
 end

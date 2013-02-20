@@ -4,7 +4,7 @@ require_relative "application"
 require_relative "candidates"
 
 class QueriesDMSoundex < ActiveRecord::Base
-	set_table_name "queries_dm_soundex"
+	self.table_name = "queries_dm_soundex"
 end
 
 

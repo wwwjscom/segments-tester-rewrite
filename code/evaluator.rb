@@ -49,50 +49,26 @@ class Evaluator < Application
 		return {:rank => rank, :found => true}
 	end
 
-#	# :::DEPRECATED::: use found_and_rank instead	
-#	# Returns whether the solution was found in the candidates
-#	def found?
-#		@candidates.has_id?(@solution_id)
-#	end
-#	# :::DEPRECATED::: use found_and_rank instead	
-#	# Returns the solutions rank within the candidates, if found
-#	def rank		
-#		sorted = @candidates.sort_by_rank
-#		sorted = sorted.collect { |c| [c.solution, c.votes] }
-#		rank   = sorted.flatten.index(@solution)
-#
-#		if rank == nil then return end
-#
-#		# Now find the true rank.  That is, if there is a tie amoung the
-#		# number of votes, select the index of the first candidate with
-#		# that many votes, instead of arbitrarly selecting its rank.
-#		@solution_votes = sorted.flatten[rank+1]
-#		true_rank = sorted.flatten.index(@solution_votes)
-#   	
-#		rank = (true_rank > 1) ? (true_rank/2)+1 : true_rank
-#		
-#		if rank > Application.get_config['rank_threshold'].to_i
-#		  Log.to_term "Rank is too high: #{rank}; setting found to false"
-#		  found = false
-#		  rank = nil
-#		  return
-#	  end
-#		
-#		Log.app("Rank::Solution: #{@solution}")
-#		Log.app("Rank::Solution_id: #{@solution_id}")
-#		Log.app("Rank::found?: #{found?}")
-#		Log.app("Rank::sorted: #{sorted}")
-#		Log.app("Rank::rank: #{rank}")
-#		Log.app("-"*50)
-#		
-#		return rank
-#	end
 	
 	# Returns the confidence
 	def confidence
 		found_and_rank
 		total_votes = @candidates.total_votes
-		("%.2f" % (@solution_votes.to_f/total_votes.to_f)).to_f
+		
+		##############################################################################
+		##############################################################################
+		
+		# Wow...this may have been a serious bug.  It looks like it was computing
+		# the old confidence by using knowledge of the solution term.  If right, 
+		# this shouldn't have been allowed.  The algorithm can't use knowledge
+		# of the solution while determining it's candidates...
+		
+		#		("%.2f" % (@solution_votes.to_f/total_votes.to_f)).to_f
+    
+		##############################################################################
+		##############################################################################
+		
+		"%.2f" % (@candidates.candidates.first.votes/total_votes.to_f)
 	end
 	
 	# Give two evaluator instances, do the following:

@@ -1,8 +1,8 @@
 require_relative "application"
 require_relative "queries"
 
-class QueriesMisspelled < ActiveRecord::Base
-	set_table_name "queries_misspelled"
+class WebQuery < ActiveRecord::Base
+	self.table_name = "queries"
 end
 
 class SQL < Application

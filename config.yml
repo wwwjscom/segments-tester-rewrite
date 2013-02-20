@@ -2,7 +2,7 @@
 # FIXME: This isn't actually read...see code/application.rb
 db_user: root
 db_pass: temp4now
-db_db: segments_tester
+db_db: segments_1234
 db_test_db: segments_1234
 
 # Do we want to also run the edit distance algorithm?  True or false.

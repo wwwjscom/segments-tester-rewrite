@@ -2,7 +2,7 @@ require_relative "sql"
 require_relative "candidates"
 
 class QueriesSegments < ActiveRecord::Base
-	set_table_name "queries_misspelled"
+	self.table_name = "wikipedia_words"
 end
 
 class Segments < Application
@@ -13,7 +13,7 @@ class Segments < Application
 
 	def find(query)
 		@misspelled = query
-    
+        
 		Log.seg("Method 1", "DEBUG")
 		segs = method_1(query)
 		find_candidates(segs)
@@ -45,37 +45,24 @@ class Segments < Application
 	#	private # ----------------
 
 	def find_candidates(segments)
-		weight = 1.0
 		@sql = SQL.new
+
 		segments.each do |seg|
-			query   = "SELECT * FROM #{get_db}.queries_misspelled WHERE LCASE(solution) LIKE LCASE('#{seg}')"
-#			results = @sql.query(query)
+			query   = "SELECT * FROM #{get_db}.wikipedia_words WHERE LCASE(word) LIKE LCASE('#{seg}') ORDER BY count DESC LIMIT 10"
+			#puts query
 			results = QueriesSegments.find_by_sql(query)
-
-			Log.seg("Query: #{query}", "DEBUG")
-
 			results.each do |result|
-				solution = result["solution"]
-				id			 = result["id"]
+
+				solution = result["word"]
+				id			 = result["id"]  		  
 				if @candidates.has_id?(id)
-					@candidates.vote_for(id, 1.0*weight)
+					@candidates.vote_for(id, 1.0)
 				else
 					c = Candidate.new(@misspelled, solution, id)
 					@candidates.add(c)
 				end # if				
 			end
 
-#			while row = results.fetch_hash
-#				solution = row["solution"]
-#				id       = row['id']
-#				if @candidates.has_id?(id)
-#					@candidates.vote_for(id, 1.0*weight)
-#				else
-#					c = Candidate.new(@misspelled, solution, id)
-#					@candidates.add(c)
-#				end # if
-#			end # while
-			weight = weight # Rought estimate show that using weights doesn't imrpove rank...go figure.
 		end # each
 	end
 
@@ -127,10 +114,14 @@ class Segments < Application
 	# %Slovakia%
 	# %akia
 	def method_4(query)
-		Log.seg("Method 4 given: #{query}", "DEBUG")
-		query = ["%" + query[(query.length/2)..-1]]
-		Log.seg("Method 4 yields: #{query}", "DEBUG")
-		query
+	  if query.length == 1
+      return [query]
+    else
+  		Log.seg("Method 4 given: #{query}", "DEBUG")
+  		query = ["%" + query[(query.length/2)..-1]]
+  		Log.seg("Method 4 yields: #{query}", "DEBUG")
+  		return query
+  	end
 	end
 
 
@@ -141,7 +132,11 @@ class Segments < Application
 	# %Slovakia%
 	# Slov%
 	def method_5(query)
-		query = [query[0..(query.length/2)-1] + "%"]
+	  if query.length == 1
+      return [query]
+    else
+  		return [query[0..(query.length/2)-1] + "%"]
+		end
 	end
 
 
@@ -161,6 +156,10 @@ class Segments < Application
 	# Slovakia
 	# Sl%ia
 	def method_7(query)
-		query = [query[0..1] + "%" + query[-2..-1]]
+    if query.length == 1
+      return [query]
+    else
+  		return [query[0..1] + "%" + query[-2..-1]]
+		end
 	end
 end

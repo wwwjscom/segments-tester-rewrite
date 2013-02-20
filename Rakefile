@@ -8,7 +8,7 @@ namespace "setup" do
 	
 	desc "Setup the solutions tables"
 	task :tables do
-		require "lib/setup_solutions_tables"
+		require_relative "lib/setup_solutions_tables"
 		sst = SetupSolutionsTables.new
 		
 		# Setup queries table where mispelled queries
@@ -61,7 +61,7 @@ namespace "run" do
   desc "Setup and run the program"
   #task :default => [:tables] do
   task :default do
-  	require "code/main"
+  	require_relative "code/main"
   	m = Main.new
   	m.search_type = :query_logs
   	m.run
@@ -69,7 +69,7 @@ namespace "run" do
 
   desc "Run the program using synthetic queries"
   task :synthetic do
-  	require "code/main"
+  	require_relative "code/main"
   	
   	FUNCTIONS = [["drop_chrs", 1], ["drop_chrs", 2], ["drop_chrs", 3], ["drop_chrs", 4],
       ["add_chrs", 1], ["add_chrs", 2], ["add_chrs", 3], ["add_chrs", 4],
@@ -99,7 +99,7 @@ namespace "run" do
 
   desc "Data Set Statistics"
   task :stats do
-	  require "lib/stats"
+	  require_relative "lib/stats"
 	  s = Stats.new
 	  puts "Data Set size: #{s.count}"
 	  puts "Query Length:"

@@ -5,11 +5,11 @@ require_relative "configs"
 
 # FIXME: Why the fuck doesn't this read the config values?
 ActiveRecord::Base.establish_connection(
-	:adapter=> "jdbcmysql",
+	:adapter=> "mysql2",
 	:host => "localhost",
-	:database=> "segments_tester",
+	:database=> "segments_1234",
 	:username => "root",
-	:password => "temp4now",
+	:password => "",
 	:pool => 30,
 	:wait_timeout => 10
 )

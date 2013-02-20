@@ -20,24 +20,8 @@ class Tester < Application
 			@grams_3_candidates = @grams_3.find
 			Tester.finalize_thread(start_time)
 		}
-		
+				
 		threads[1] = Thread.new {
-		  start_time = Time.now
-		  Thread.current[:name] = "4grams"
-			@grams_4 = Ngram.new(4, query)
-			@grams_4_candidates = @grams_4.find
-			Tester.finalize_thread(start_time)
-		}
-
-		threads[2] = Thread.new {
-		  start_time = Time.now
-		  Thread.current[:name] = "dm"
-			@dm = DMSoundex.new(query)
-			@dm_candidates = @dm.find
-			Tester.finalize_thread(start_time)
-		}
-		
-		threads[3] = Thread.new {
 		  start_time = Time.now
 		  Thread.current[:name] = "seg"
 			@seg = Segments.new
@@ -45,17 +29,6 @@ class Tester < Application
 			Tester.finalize_thread(start_time)
 		}
 		
-    if Application.use_edit_disance?
-    		threads[4] = Thread.new {
-  		  start_time = Time.now
-  		  Thread.current[:name] = "edit"
-  			@ed = EditDistance.new(query)
-  			distances = @ed.match(@ed.all_solutions)
-  			@ed_candidates = @ed.combine(distances) # Combine candidates & their edit distances
-        Tester.finalize_thread(start_time)
-  		}
-  	end
-				
 		threads.each do |aThread| 
 		  aThread.join
 	  end
