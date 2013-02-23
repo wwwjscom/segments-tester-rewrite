@@ -4,6 +4,7 @@ class Candidates
 	
 	def initialize
 		@candidates = Array.new # An array of candidate objects
+		self
 	end
 	
 	def prune
@@ -12,6 +13,7 @@ class Candidates
 	
 	def add(candidate)
 		@candidates << candidate
+		self
 	end
 	
 	# Removes the candidate at the specified index

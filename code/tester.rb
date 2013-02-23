@@ -9,15 +9,15 @@ class Tester < Application
 	attr_accessor :grams_3_candidates, :grams_4_candidates, :dm_candidates, :seg_candidates, :ed_candidates
 	
 	# Queries all of our engines for the given query
-	def find(query)
+	def find(query, bigram_query = false)
 		
 		threads = []
 		
 		threads[0] = Thread.new {
 		  start_time = Time.now
-		  Thread.current[:name] = "3grams"
-			@grams_3 = Ngram.new(3, query)
-			@grams_3_candidates = @grams_3.find
+#		  Thread.current[:name] = "3grams"
+#			@grams_3 = Ngram.new(3, query)
+#			@grams_3_candidates = @grams_3.find
 			Tester.finalize_thread(start_time)
 		}
 				
@@ -25,7 +25,7 @@ class Tester < Application
 		  start_time = Time.now
 		  Thread.current[:name] = "seg"
 			@seg = Segments.new
-			@seg_candidates = @seg.find(query)
+			@seg_candidates = @seg.find(query, bigram_query)
 			Tester.finalize_thread(start_time)
 		}
 		

@@ -11,8 +11,16 @@ class Segments < Application
 		@candidates = Candidates.new
 	end
 
-	def find(query)
+	def find(query, bigram_query = false)
 		@misspelled = query
+		@bigram_query = bigram_query
+		
+		# First look for an exact match, and return if one is found
+		find_candidates([query], true)
+    if @candidates.size > 0
+      Log.to_term "Exact match for \"#{query}\" found"
+  		return @candidates
+		end
         
 		Log.seg("Method 1", "DEBUG")
 		segs = method_1(query)
@@ -44,21 +52,38 @@ class Segments < Application
 
 	#	private # ----------------
 
-	def find_candidates(segments)
+	def find_candidates(segments, exact_match_search = false)
 		@sql = SQL.new
 
 		segments.each do |seg|
-			query   = "SELECT * FROM #{get_db}.wikipedia_words WHERE LCASE(word) LIKE LCASE('#{seg}') ORDER BY count DESC LIMIT 10"
-			#puts query
+		  if @bigram_query
+		    query   = "SELECT * FROM #{get_db}.lexicon_bigrams WHERE LCASE(word) LIKE LCASE('#{seg}') AND count > 90 ORDER BY count DESC LIMIT 10"
+  		else
+  		  query   = "SELECT * FROM #{get_db}.wikipedia_words WHERE LCASE(word) LIKE LCASE('#{seg}') AND count > 500 ORDER BY count DESC LIMIT 10"
+  	  end
 			results = QueriesSegments.find_by_sql(query)
 			results.each do |result|
+
+        if exact_match_search
+          # Check to make sure our first hit contains a sufficient number
+          # of occurances in our lexicon prior to recommending it as a
+          # candidate.  This is needed since the wikipedia lexicon contains
+          # spelling errors...
+          if @bigram_query
+            return if result["count"] < 1500
+          else
+            return if result["count"] < 3000
+          end
+        end
 
 				solution = result["word"]
 				id			 = result["id"]  		  
 				if @candidates.has_id?(id)
+#					@candidates.vote_for(id, 1.0 + Math.log(result["count"]))
 					@candidates.vote_for(id, 1.0)
 				else
-					c = Candidate.new(@misspelled, solution, id)
+#					c = Candidate.new(@misspelled, solution, id, 1.0 + Math.log(result["count"]))
+					c = Candidate.new(@misspelled, solution, id)					
 					@candidates.add(c)
 				end # if				
 			end

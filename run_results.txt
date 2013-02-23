@@ -1,0 +1,60 @@
+
+
+--- To do/check:
+
+REALLY SHOULD MAKE BIGRAMS NOT CONQUOR ALL JUST CAUSE IT FOUND ONE HIT.  Make that hit have a min number of votes at least or something similar...5 votes maybe?
+
+Make sure that when segments unigrams finds an exact match, that it does not take president over segments bigrams.  Bigrams should always dominate unigrams findings.
+
+
+
+--- Results:
+
+65 type 1 queries
+uni and bigrams for segments
+no vanilla ngrams
+bigrams needs a count > 90
+unigrams needs a count > 500
+exact match needs count > 3000 for segments unigrams
+exact match needs count > 1500 for segments bigrams
+02-22-13 15:32:42 [INFO]::              Total queries run: 65
+02-22-13 15:32:42 [INFO]::              Running f1: 0.6153846153846154
+02-22-13 15:32:42 [INFO]::              Running sum of f1: 40.0
+-------------
+
+
+Same as above but with more queries
+02-22-13 16:24:44 [INFO]::              Total queries run: 78
+02-22-13 16:24:44 [INFO]::              Running precision: 0.5641025641025641
+02-22-13 16:24:44 [INFO]::              Running recall: 0.5641025641025641
+02-22-13 16:24:44 [INFO]::              Running f1: 0.5641025641025641
+02-22-13 16:24:44 [INFO]::              Running sum of f1: 44.0
+-------------
+Results for type 2 query errors
+
+02-22-13 16:36:58 [INFO]::              Total queries run: 33
+02-22-13 16:36:58 [INFO]::              Running precision: 0.2727272727272727
+02-22-13 16:36:58 [INFO]::              Running recall: 0.2727272727272727
+02-22-13 16:36:58 [INFO]::              Running f1: 0.2727272727272727
+02-22-13 16:36:58 [INFO]::              Running sum of f1: 9.0
+-------------
+
+
+I re-evaluated some of the queries that were labeled as type 2 errors using the following rules:
+
+Rules for deciding if a query gets thrown out
+- Context based rules
+1) Does there exist a match of the "misspelled" word within our unigram lexicon
+2) If so, there must then also exist a bigram to disambiguate the word to its true meaning.  There must also not be an exact match of the "misspelled" bigram within the bigram lexicon.
+3) If no such bigram exists, the query is thrown out.
+
+Now only 15 exist, from the original 33.  Re-reunning the results to see what happens.
+
+
+
+
+
+
+
+
+

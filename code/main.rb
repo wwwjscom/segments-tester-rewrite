@@ -34,6 +34,40 @@ class Main < Application
 #    swap_results?
   end
 
+	def run_for_a_bigram_query_term(query_bigram)
+	  puts "Bigram: #{query_bigram}"
+    @bigram_tester = Tester.new
+		@bigram_tester.find(query_bigram, true)
+		
+		# Remove the 0.0 vote candidates
+		@bigram_tester.seg_candidates.prune
+    
+		# Grab the max bigram votes
+		max_bigram_votes = 0.0
+		total_votes = @bigram_tester.seg_candidates.total_votes
+		@bigram_tester.seg_candidates.candidates.each { |c| max_bigram_votes = c.votes if c.votes > max_bigram_votes }
+		
+		# Now remove the candidates who received fewer than half the votes of the highest scored candidates
+		@bigram_tester.seg_candidates.candidates.delete_if { |c| c.votes < max_bigram_votes/2 }		
+    
+    # If ngrams only has a single candidate, we're very confident in our recomendation
+#		if @bigram_tester.seg_candidates.size > 1 &&  max_bigram_votes < total_votes/2
+		if @bigram_tester.seg_candidates.size > 1
+		  puts "!!! \tA single bigram failed to get over half the votes..."
+	  elsif @bigram_tester.seg_candidates.size == 1
+	    # Couldn't this create a problem where just one result is returned, but we're
+	    # not actually confident in it...but since the size is one this if statement
+	    # thinks we are...hmmm....will this be a problem?  If so, how to fix...?
+	    Log.to_term "Bigrams is very confident...dun dun dun!"
+	    @bigrams_is_very_confident = true
+	  end
+		
+		# Debug loop
+		@bigram_tester.seg_candidates.candidates.each do |c|
+		  puts "Bigram candidate: #{c.solution}\t#{c.votes}"
+	  end
+  end
+
 
   # This method gets all of the web queries.  For each query, it
   # breaks it down by word, and sends the word to the spell checking
@@ -45,8 +79,10 @@ class Main < Application
 		@candidate_terms_sets = nil
 		f1, recall, precision = 0.0, 0.0, 0.0
 		
-		WebQuery.where(:error_type => 1).each_with_index do |query, query_num|
+		WebQuery.where(:error_type => 2).each_with_index do |query, query_num|
     #WebQuery.find_each do |query|
+    
+      @skip = false
       
       puts "Running query: #{query.inspect}"
       
@@ -55,15 +91,53 @@ class Main < Application
 
       # Pass the query term to the correction algorithms for querying      
       query_terms.each_with_index do |query_term, term_index|
+        
+        if @bigrams_is_very_confident
+          # The previous result was short circuited by bigrams results, so skip
+          # this word too - since bigrams' last result already submmited a guess
+          # for this query term.
+          @bigrams_is_very_confident = false
+          next
+        end
+        
         run_for_a_query_term(query_term)
+        
+        if term_index+1 < query_terms.size
+          bigram = "%s %s" % [query_terms[term_index], query_terms[term_index+1]]
+          run_for_a_bigram_query_term(bigram)
+        end
 
         # Prune results
-        @tester.seg_candidates.prune
+        @tester.seg_candidates.prune unless @tester.seg_candidates.size == 1
         
         # Store the recomendations for this query term
         @candidate_terms_sets[term_index] = Hash.new
         @candidate_terms_sets[term_index][:segments_candidates] = @tester.seg_candidates
-      end
+      
+        # If bigrams is very confident in results it found, lets go ahead and ignore the
+        # unigram candidates.  Reasoning here is cause if you found two works that match
+        # our query with high confidence, that's more likely to be what we want rather
+        # than a single word match.
+        #
+        # So, lets go ahead and hack the shit out of the structure that the evaluation
+        # process depends on so that we can just inject the candidates without having
+        # to update/edit the rest of the code beyond this if statement.  Ugly yes...
+        # but the deadline is closing in.
+        if @bigrams_is_very_confident
+          Log.to_term "Bigrams is very confident.  Going to short circuit the rest of the code in favor of its results"
+          bigram_candidate = @bigram_tester.seg_candidates.candidates.first
+          Log.to_term "Bigrams candidate: #{bigram_candidate.solution}"
+          bigram_word_1, bigram_word_2 = bigram_candidate.solution.split(" ")
+          bigram_word_1_candidate = Candidates.new.add(Candidate.new(bigram_candidate.misspelled, bigram_word_1, bigram_candidate.id))
+          bigram_word_2_candidate = Candidates.new.add(Candidate.new(bigram_candidate.misspelled, bigram_word_2, bigram_candidate.id))
+          @candidate_terms_sets[term_index][:segments_candidates]   = bigram_word_1_candidate # first word of the bigram as a candidate instance
+          @candidate_terms_sets[term_index+1]                       = Hash.new # second word of the bigram as a candidate instance
+          @candidate_terms_sets[term_index+1][:segments_candidates] = bigram_word_2_candidate # second word of the bigram as a candidate instance
+          
+          next # Go ahead and move on to the next query term since we believe we already found this one (and the next one)
+        end
+
+      end # query_terms.each_with_index
 
       
       # Now tim the candidate terms set to those that meet our probability threadhold
@@ -72,9 +146,19 @@ class Main < Application
         total_votes = seg_candidates.total_votes
 
         # Only take the top cancidate for each query term.  Their rank is determined by
-        # the votes casted for them.  Also prune candidate who have insufficient confidence.
+        # the votes casted for them.
         seg_candidates.candidates = [seg_candidates.candidates.sort!{ |a,b| b.votes <=> a.votes }[0]]
+        
+        #   Also prune candidate who have insufficient confidence.
 #        seg_candidates.candidates.delete_if { |c| c.votes/total_votes < 0.05}  
+        
+
+        # Skip is segments unigrams failed to find any candidates
+        if seg_candidates.candidates.first == nil
+          @skip = true
+          break
+        end
+        
         
         # Now more pruning.  Find the index (if any) where there is a dramatic dropoff of
         # votes for a candidate with respect to the highest ranked candidate.      
@@ -99,6 +183,9 @@ class Main < Application
           Log.to_term "\t%s\t%s\t%s" % [c.solution, c.votes, c.votes/total_votes]
         end        
       end
+      
+      # Skip is segments unigrams failed to find any candidates
+      next if @skip
             
       # Now constrcute all the permutations of possible result strings that may exist
       # given our candidates sets.
@@ -137,6 +224,7 @@ class Main < Application
         break if (index > 1) || ((suggestion.map(&:votes).inject(:+)/query_terms.size.to_f) < 4.0)
       end
       
+      # Take only the highest rank suggestions to return to the user.
       final_list = [final_list[0]]
       
       correct_result_found = false
@@ -169,9 +257,9 @@ class Main < Application
       Log.to_term "\t\tF1 for this query: #{this_f1}"
       
       if correct_result_found
-        precision += this_precision
-        recall += this_recall
-        f1 += this_f1
+        precision += 1.0
+        recall += 1.0
+        f1 += 1.0
       end
       
       Log.to_term "\t\t-"*5
@@ -179,6 +267,7 @@ class Main < Application
       Log.to_term "\t\tRunning precision: #{(1.0/(query_num+1.0))*precision}"
       Log.to_term "\t\tRunning recall: #{(1.0/(query_num+1.0))*recall}"
       Log.to_term "\t\tRunning f1: #{(1.0/(query_num+1.0))*f1}"
+      Log.to_term "\t\tRunning sum of f1: #{f1}"
       
       
       ########################################
