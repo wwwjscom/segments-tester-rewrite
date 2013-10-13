@@ -17,7 +17,8 @@ class Ngram < Application
 	attr_accessor :grams, :query
 
 	# Generates the ngrams from the query and stores them for later access
-	def initialize(n, query)
+	def initialize(n, query, bigram_query = false)
+	  @bigram_query = bigram_query
 		@candidates = Candidates.new
 		@misspelled = query
 		@query = query
@@ -39,12 +40,14 @@ class Ngram < Application
 		@config = Configs.read_yml
 		@sql = SQL.new
 		@grams.each do |gram|
-			if @n == 3
-				results = Queries3grams.find_by_sql "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(gram) = LCASE('#{gram}') ORDER BY lexicon_count DESC LIMIT 50"
-			else
-				results = Queries4grams.find_by_sql "SELECT * FROM #{get_db}.#{@config['queries_table']}_#{@n}grams WHERE LCASE(#{@n}grams) = LCASE('#{gram}')"
-			end
-			
+		  
+		  if @bigram_query
+		    query   = "SELECT * FROM #{get_db}.lexicon_bigrams WHERE LCASE(word) LIKE LCASE('%#{gram}%') AND count > 90 ORDER BY count DESC LIMIT 10"
+  		else
+  		  query   = "SELECT * FROM #{get_db}.wikipedia_words WHERE LCASE(word) LIKE LCASE('%#{gram}%') AND count > 500 ORDER BY count DESC LIMIT 10"
+		  end
+      results = Queries3grams.find_by_sql(query)
+      
 			results.each do |result|
 				add(result)
 			end
@@ -54,7 +57,7 @@ class Ngram < Application
 	end
 	
 	def add(row)
-		solution   = row['solution']
+		solution   = row['word']
 		id         = row['id']
 		misspelled = @misspelled
 

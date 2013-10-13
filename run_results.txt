@@ -50,11 +50,8 @@ Rules for deciding if a query gets thrown out
 
 Now only 15 exist, from the original 33.  Re-reunning the results to see what happens.
 
-
-
-
-
-
-
-
-
+02-22-13 19:59:00 [INFO]::              Total queries run: 15
+02-22-13 19:59:00 [INFO]::              Running precision: 0.3333333333333333
+02-22-13 19:59:00 [INFO]::              Running recall: 0.3333333333333333
+02-22-13 19:59:00 [INFO]::              Running f1: 0.3333333333333333
+02-22-13 19:59:00 [INFO]::              Running sum of f1: 5.0

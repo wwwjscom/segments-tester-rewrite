@@ -107,6 +107,9 @@ class Main < Application
           run_for_a_bigram_query_term(bigram)
         end
 
+        puts "ngram top candidate: #{@tester.grams_3_candidates.sort_by_rank.first.solution}"
+        puts "ngram top candidate: #{@bigram_tester.grams_3_candidates.sort_by_rank.first.solution}"
+
         # Prune results
         @tester.seg_candidates.prune unless @tester.seg_candidates.size == 1
         

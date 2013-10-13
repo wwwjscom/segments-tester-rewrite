@@ -52,6 +52,7 @@ class Candidates
 	# Returns an array of candidates, sorted by their rank
 	def sort_by_rank
 		sorted = @candidates.sort{ |x,y| y.votes <=> x.votes }
+		@candidates
 	end
 
 	# Returns the total number of votes

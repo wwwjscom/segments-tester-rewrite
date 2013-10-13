@@ -15,9 +15,9 @@ class Tester < Application
 		
 		threads[0] = Thread.new {
 		  start_time = Time.now
-#		  Thread.current[:name] = "3grams"
-#			@grams_3 = Ngram.new(3, query)
-#			@grams_3_candidates = @grams_3.find
+		  Thread.current[:name] = "3grams"
+			@grams_3 = Ngram.new(3, query, bigram_query)
+			@grams_3_candidates = @grams_3.find
 			Tester.finalize_thread(start_time)
 		}
 				
